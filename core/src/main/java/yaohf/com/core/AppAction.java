@@ -15,6 +15,8 @@
  */
 package yaohf.com.core;
 
+import yaohf.com.api.IRequestCallback;
+
 /**
  * 接收app层的各种Action
  * @version 1.0

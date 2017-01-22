@@ -1,4 +1,4 @@
-package yaohf.com.core;
+package yaohf.com.api;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import yaohf.com.api.ApiResponse;
 import yaohf.com.api.net.HttpEngine;
 import yaohf.com.api.utils.L;
 import yaohf.com.model.CouponBO;

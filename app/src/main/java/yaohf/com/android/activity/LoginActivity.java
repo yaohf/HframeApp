@@ -25,7 +25,7 @@ import android.widget.Toast;
 import yaohf.com.android.R;
 import yaohf.com.api.Api;
 import yaohf.com.api.utils.L;
-import yaohf.com.core.IRequestCallback;
+import yaohf.com.api.IRequestCallback;
 
 
 /**

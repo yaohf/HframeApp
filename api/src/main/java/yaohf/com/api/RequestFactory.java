@@ -1,4 +1,4 @@
-package yaohf.com.core;
+package yaohf.com.api;
 
 /**
  * Created by viqgd on 2017/1/14.

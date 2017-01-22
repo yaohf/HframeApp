@@ -22,6 +22,10 @@ import android.text.TextUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import yaohf.com.api.ErrorEvent;
+import yaohf.com.api.IRequestCallback;
+import yaohf.com.api.IRequestManager;
+import yaohf.com.api.RequestFactory;
 import yaohf.com.core.utils.JsonUtil;
 
 /**
