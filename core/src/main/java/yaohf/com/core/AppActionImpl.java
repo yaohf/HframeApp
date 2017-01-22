@@ -19,14 +19,14 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
+import yaohf.com.api.Api;
 import yaohf.com.api.ErrorEvent;
 import yaohf.com.api.IRequestCallback;
-import yaohf.com.api.IRequestManager;
 import yaohf.com.api.RequestFactory;
-import yaohf.com.core.utils.JsonUtil;
+import yaohf.com.api.manager.IRequestManager;
 
 /**
  * AppAction接口的实现类
@@ -46,58 +46,7 @@ public class AppActionImpl implements AppAction {
         requestManager = RequestFactory.getIRequestManager();
     }
 
-    @Override
-    public void sendSmsCode(final String phoneNum, final IRequestCallback callback) {
-        // 参数检查
-        if (TextUtils.isEmpty(phoneNum)) {
-            if (callback != null) {
-                callback.onFailure(ErrorEvent.PARAM_NULL, "手机号为空");
-            }
-            return;
-        }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(phoneNum);
-        if (!matcher.matches()) {
-            if (callback != null) {
-                callback.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
-            }
-            return;
-        }
 
-    }
-
-    @Override
-    public void register(final String phoneNum, final String code, final String password, final IRequestCallback callback) {
-        // 参数检查
-        if (TextUtils.isEmpty(phoneNum)) {
-            if (callback != null) {
-                callback.onFailure(ErrorEvent.PARAM_NULL, "手机号为空");
-            }
-            return;
-        }
-        if (TextUtils.isEmpty(code)) {
-            if (callback != null) {
-                callback.onFailure(ErrorEvent.PARAM_NULL, "验证码为空");
-            }
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            if (callback != null) {
-                callback.onFailure(ErrorEvent.PARAM_NULL, "密码为空");
-            }
-            return;
-        }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(phoneNum);
-        if (!matcher.matches()) {
-            if (callback != null) {
-                callback.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
-            }
-            return;
-        }
-
-
-    }
 
     @Override
     public void login(final String loginName, final String password, final IRequestCallback callback) {
@@ -114,43 +63,14 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-
-
-    }
-
-    @Override
-    public void listCoupon(final int currentPage, final  IRequestCallback callback) {
-        // 参数检查
-        if (currentPage < 0) {
-            if (callback != null) {
-                callback.onFailure(ErrorEvent.PARAM_ILLEGAL, "当前页数小于零");
-            }
-        }
-
-
-    }
-
-    @Override
-    public void test(final String url, final String requsetJson, final IRequestCallback callback) {
-
-        // 请求Api
-        new AsyncTask<String,String,String> ()
+        final Map<String,String> params = new HashMap<String,String>();
+        params.put("username",loginName);
+        params.put("password",password);
+        new AsyncTask<Void,Void,Void> ()
         {
             @Override
-            protected String doInBackground(String... strs) {
-
-                return requestManager.post(url, requsetJson);
-            }
-
-            @Override
-            protected void onPostExecute(String response) {
-                if (callback != null && response != null) {
-                    if (JsonUtil.isJsonType(response)) {
-                        callback.onSuccess(response);
-                    } else {
-                        callback.onFailure("json error", response);
-                    }
-                }
+            protected Void doInBackground(Void... strs) {
+                return requestManager.post(Api.TEST_HTTP_URL, params,callback);
             }
         }.execute();
     }

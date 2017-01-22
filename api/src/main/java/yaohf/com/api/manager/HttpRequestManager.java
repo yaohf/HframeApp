@@ -1,12 +1,16 @@
-package yaohf.com.api;
+package yaohf.com.api.manager;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
+import yaohf.com.api.ApiResponse;
+import yaohf.com.api.IRequestCallback;
 import yaohf.com.api.net.HttpEngine;
+import yaohf.com.api.utils.JsonUtil;
 import yaohf.com.api.utils.L;
 import yaohf.com.model.CouponBO;
 
@@ -14,7 +18,7 @@ import yaohf.com.model.CouponBO;
  * Created by viqgd on 2017/1/13.
  */
 
-public class HttpRequestManager implements IRequestManager {
+public class HttpRequestManager implements IRequestManager{
 
     private static HttpRequestManager instance;
     private HttpEngine httpEngine;
@@ -31,32 +35,40 @@ public class HttpRequestManager implements IRequestManager {
 
 
     @Override
-    public String get(String url) {
-        return null;
+    public void get(String url,IRequestCallback callback) {
+
     }
 
     @Override
-    public String post(String url, String requestBodyJson) {
+    public void post(String url, Map<String,String> params, IRequestCallback callback) {
         L.v("url>>" + url);
         Type type = new TypeToken<ApiResponse<List<CouponBO>>>() {
         }.getType();
+
+        String requestBodyJson = JsonUtil.getJsonStrs(params);
         String result = null;
         try {
             result = httpEngine.postHandle(url, requestBodyJson, type);
+            if(JsonUtil.isJsonType(result))
+            {
+                callback.onSuccess(result);
+            }else{
+                callback.onFailure("json error",result);
+            }
             L.v("result>>" + result);
         } catch (IOException e) {
+            callback.onFailure("http io  error",e.getMessage());
             e.printStackTrace();
         }
-        return result;
     }
 
     @Override
-    public String put(String url, String requestBodyJson) {
-        return null;
+    public void put(String url,  Map<String,String> params,IRequestCallback callback) {
     }
 
     @Override
-    public String delete(String url, String requestBodyJson) {
-        return null;
+    public void delete(String url,  Map<String,String> params,IRequestCallback callback) {
     }
+
+
 }

@@ -33,7 +33,7 @@ import yaohf.com.core.AppAction;
  * Activity抽象基类
  * @version 1.0
  */
-public abstract class KBaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity {
     // 上下文实例
     public Context context;
     // 应用全局的实例

@@ -24,7 +24,7 @@ import yaohf.com.widget.recyclerview.RecyclerAdapter;
 import yaohf.com.widget.recyclerview.listener.RvFabOffsetHidingScrollListener;
 import yaohf.com.widget.recyclerview.listener.RvToolbarOffsetHidingScrollListener;
 
-public class RecyclerActivity extends KBaseActivity implements ItemTouchAdapter.OnStartActionListener{
+public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.OnStartActionListener{
 
     List<String> mDataList;
     private RecyclerView recyclerView;

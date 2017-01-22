@@ -23,16 +23,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import yaohf.com.android.R;
-import yaohf.com.api.Api;
-import yaohf.com.api.utils.L;
 import yaohf.com.api.IRequestCallback;
+import yaohf.com.api.utils.L;
 
 
 /**
  * 登录
  * @version 1.0
  */
-public class LoginActivity extends KBaseActivity {
+public class LoginActivity extends BaseActivity {
 
     private EditText phoneEdit;
     private EditText passwordEdit;
@@ -60,8 +59,8 @@ public class LoginActivity extends KBaseActivity {
         String loginName = phoneEdit.getText().toString();
         String password = passwordEdit.getText().toString();
         loginBtn.setEnabled(false);
-        String json = "{\"userName\":"+ loginName +",\"password\":\""+ password +"\"}";
-        this.appAction.test(Api.TEST_HTTP_URL, json, new IRequestCallback() {
+
+        this.appAction.login(loginName,password, new IRequestCallback() {
             @Override
             public void onSuccess(Object data) {
                 L.v("data>>" + data);

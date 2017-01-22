@@ -1,4 +1,4 @@
-package yaohf.com.core.utils;
+package yaohf.com.api.utils;
 
 import android.text.TextUtils;
 
@@ -7,8 +7,6 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 import java.util.Map;
-
-import yaohf.com.api.utils.L;
 
 /**
  * Created by viqgd on 2017/1/14.
@@ -82,16 +80,16 @@ public class JsonUtil {
      * @param maps
      * @return
      */
-    public static String getJsonStrs(Map<String,Object> maps)
+    public static String getJsonStrs(Map<String,String> maps)
     {
         if(maps.size() == 0)
             return null;
-       Iterator<Map.Entry<String,Object>> iter =  maps.entrySet().iterator();
+       Iterator<Map.Entry<String,String>> iter =  maps.entrySet().iterator();
         JSONObject obj = new JSONObject();
 
         while(iter.hasNext())
         {
-            Map.Entry<String,Object> entry = iter.next();
+            Map.Entry<String,String> entry = iter.next();
             try {
                 obj.put(entry.getKey(),entry.getValue());
                 obj.put(entry.getKey(),entry.getValue());

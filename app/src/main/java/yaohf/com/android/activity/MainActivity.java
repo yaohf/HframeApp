@@ -5,7 +5,7 @@ import android.os.Message;
 
 import yaohf.com.android.R;
 
-public class MainActivity extends KBaseActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
