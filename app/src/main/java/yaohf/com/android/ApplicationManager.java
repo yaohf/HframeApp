@@ -17,6 +17,7 @@ package yaohf.com.android;
 
 import android.app.Application;
 
+import yaohf.com.api.utils.VolleyManager;
 import yaohf.com.core.AppAction;
 import yaohf.com.core.AppActionImpl;
 
@@ -32,6 +33,7 @@ public class ApplicationManager extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        VolleyManager.getInstance(this);
         appAction = new AppActionImpl(this);
     }
 

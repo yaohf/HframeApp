@@ -66,11 +66,12 @@ public class AppActionImpl implements AppAction {
         final Map<String,String> params = new HashMap<String,String>();
         params.put("username",loginName);
         params.put("password",password);
-        new AsyncTask<Void,Void,Void> ()
+        new AsyncTask<Void, Void, Void>()
         {
             @Override
             protected Void doInBackground(Void... strs) {
-                return requestManager.post(Api.TEST_HTTP_URL, params,callback);
+                  requestManager.post(Api.TEST_HTTP_URL, params,callback);
+                return null;
             }
         }.execute();
     }

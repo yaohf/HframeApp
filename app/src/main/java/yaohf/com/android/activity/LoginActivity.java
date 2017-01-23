@@ -15,6 +15,7 @@
  */
 package yaohf.com.android.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -58,19 +59,24 @@ public class LoginActivity extends BaseActivity {
     public void toLogin(View view) {
         String loginName = phoneEdit.getText().toString();
         String password = passwordEdit.getText().toString();
-        loginBtn.setEnabled(false);
 
-        this.appAction.login(loginName,password, new IRequestCallback() {
+        this.appAction.login(loginName, password, new IRequestCallback() {
             @Override
             public void onSuccess(Object data) {
                 L.v("data>>" + data);
-                Toast.makeText(context, "成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "成功", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mContext,RecyclerActivity.class));
             }
+
             @Override
             public void onFailure(String errorEvent, String message) {
                 L.v("message>>" + message);
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mContext,RecyclerActivity.class));
             }
         });
     }
+
+
+
 }

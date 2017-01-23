@@ -35,7 +35,7 @@ import yaohf.com.core.AppAction;
  */
 public abstract class BaseActivity extends FragmentActivity {
     // 上下文实例
-    public Context context;
+    public Context mContext;
     // 应用全局的实例
     public ApplicationManager application;
     // 核心层的Action实例
@@ -44,7 +44,7 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
+        mContext = getApplicationContext();
         application = (ApplicationManager) this.getApplication();
         appAction = application.getAppAction();
     }

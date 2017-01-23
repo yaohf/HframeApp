@@ -9,6 +9,8 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.Map;
 
 import yaohf.com.api.IRequestCallback;
+import yaohf.com.api.utils.JsonUtil;
+import yaohf.com.api.utils.VolleyManager;
 
 /**
  * Volley 实现
@@ -34,14 +36,18 @@ public class VolleyRequestManager implements IRequestManager {
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                callback.onSuccess(response);
+                if (JsonUtil.isJsonType(response))
+                    callback.onSuccess(response);
+                else
+                    callback.onFailure("json error", response);
             }
         }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        callback.onFailure("volley", error.getMessage());
-                    }
-                });
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure("volley", error.getMessage());
+            }
+        });
+        VolleyManager.getRequestQueue().add(request);
 
     }
 
@@ -53,7 +59,10 @@ public class VolleyRequestManager implements IRequestManager {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                callback.onSuccess(response);
+                if (JsonUtil.isJsonType(response))
+                    callback.onSuccess(response);
+                else
+                    callback.onFailure("json error", response);
             }
         },
                 new Response.ErrorListener() {
@@ -67,6 +76,8 @@ public class VolleyRequestManager implements IRequestManager {
                 return params;
             }
         };
+        VolleyManager.getRequestQueue().add(request);
+
     }
 
     @Override
