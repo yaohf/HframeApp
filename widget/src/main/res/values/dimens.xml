@@ -4,4 +4,13 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="tabsHeight">100dp</dimen>
+    <!-- toolbar -->
+    <dimen name="title_bar_padding">5dip</dimen>
+    <dimen name="title_size">20sp</dimen>
+    <dimen name="btn_margin">22dip</dimen>
+    <dimen name="title_tv_width">300dip</dimen>
+    <dimen name="title_tv_padding">10dip</dimen>
+    <dimen name="text_dimen">20sp</dimen>
+
+    <dimen name="title_bar_height">75dip</dimen>
 </resources>

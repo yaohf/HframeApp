@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Widget</string>
+    <string name="color_select">颜色</string>
+    <string name="paint_select_str">画笔</string>
+    <string name="shape_select_str">形状</string>
+    <string name="eraser_select_str">橡皮</string>
+    <string name="camera_str">相机</string>
+    <string name="album_str">相册</string>
+    <string name="all_del_str">全部</string>
+    <string name="graffiti_str">仅涂鸦</string>
+
+
+    <string name="test_book_str">涂鸦板</string>
+
+    <string name="cancel">取消</string>
+    <string name="save_str">保存</string>
+    <string name="hint_str">提示</string>
+    <string name="is_save_panel_str">是否保存?</string>
+
+
+    <string name="sd_full">硬盘已满，请清除部分图片后，再拍照</string>
+    <string name="picture_is_null">图片为空，请重新选择</string>
+
 </resources>

@@ -6,7 +6,7 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -16,7 +16,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import utils.L;
 import yaohf.com.android.R;
+import yaohf.com.android.stackFragment.test.FramentMainActivity;
 import yaohf.com.widget.recyclerview.ItemTouchAdapter;
 import yaohf.com.widget.recyclerview.ItemTouchAdapterWrapper;
 import yaohf.com.widget.recyclerview.ItemTouchHelperCallback;
@@ -52,10 +54,15 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
 
     private void init() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mDataList = new ArrayList<>();
-        for (int i = 0; i <= 100; i++) {
+        mDataList.add("Frament Stack 管理");
+        mDataList.add("涂鸦板");
+        final int count = mDataList.size();
+        for (int i = count; i <= 100; i++) {
             mDataList.add(String.valueOf(i));
         }
         //设置item动画
@@ -65,20 +72,20 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         wrapper.addFooter(R.layout.footer_load_more);
         wrapper.addHeader(R.layout.header);
         //添加item点击事件监听
-        mAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int pos) {
-                Toast.makeText(RecyclerActivity.this, "click " + pos, Toast.LENGTH_SHORT).show();
-            }
-        });
+        mAdapter.setOnItemClickListener(itemClickListener);
         mAdapter.setOnItemLongClickListener(new RecyclerAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View itemView, int pos) {
                 Toast.makeText(RecyclerActivity.this, "long click " + pos, Toast.LENGTH_SHORT).show();
             }
         });
+
+
         //设置布局样式LayoutManager
-        recyclerView.setLayoutManager(new LinearLayoutManager(RecyclerActivity.this, LinearLayoutManager.VERTICAL, false));
+        final GridLayoutManager gridLayout = new GridLayoutManager(mContext,3);
+//      final LinearLayoutManager linearLayout = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+
+        recyclerView.setLayoutManager(gridLayout);
         recyclerView.setAdapter(wrapper);
         recyclerView.addOnScrollListener(new RvToolbarOffsetHidingScrollListener(this, mToolbar));
         recyclerView.addOnScrollListener(new RvFabOffsetHidingScrollListener(this,fab));
@@ -86,6 +93,26 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(wrapper));
         mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
+    //Fragment Stack test
+    private static final int FRAGMENT_STACK_CLICK = 1;
+    //涂鸦板绘画
+    private static final int PANEL_CLICK = 2;
+    RecyclerAdapter.OnItemClickListener itemClickListener = new RecyclerAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View itemView, int pos) {
+            L.v("pos>>" + pos);
+            switch(pos)
+            {
+                //Fragment Stack test
+                case FRAGMENT_STACK_CLICK:
+                    startActivity(FramentMainActivity.class,null);
+                    break;
+                case PANEL_CLICK:
+                    startActivity(PanelActivity.class,null);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void activityHanlderMessage(Message m) {

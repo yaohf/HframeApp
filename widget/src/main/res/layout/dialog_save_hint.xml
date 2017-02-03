@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="600dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/dialog_vote_save_tv"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/save_str"
+        android:textColor="@color/dialog_title"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/msg_tv"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="50dp"
+        android:textColor="@color/text_default_color"
+        android:textSize="22sp" />
+
+    <LinearLayout
+        android:id="@+id/save_ly"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+      
+        android:visibility="gone" >
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/dialog_save_cancel"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/text_dimen"
+            android:background="@color/dialog_button_bg" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:background="#bfbfbf" />
+
+        <Button
+            android:id="@+id/dialog_save_ok"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+                     android:textSize="@dimen/text_dimen"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/dialog_button_bg"
+            android:text="@string/save_str" />
+    </LinearLayout>
+
+</LinearLayout>

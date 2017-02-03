@@ -15,7 +15,6 @@
  */
 package yaohf.com.android.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -65,14 +64,14 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(Object data) {
                 L.v("data>>" + data);
                 Toast.makeText(mContext, "成功", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(mContext,RecyclerActivity.class));
+                startActivity(RecyclerActivity.class,null);
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
                 L.v("message>>" + message);
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(mContext,RecyclerActivity.class));
+                startActivity(RecyclerActivity.class,null);
             }
         });
     }

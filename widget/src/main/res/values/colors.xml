@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="toolbar_color">#30b2e6</color>
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -12,4 +14,29 @@
     <color name="color_accent_pink">#ff4081</color>
     <color name="color_shadow">#44000000</color>
     <color name="transparent">#00000000</color>
+
+    <color name="blue_color">#78BBFC</color>
+    <color name="red_color">#E03237</color>
+
+    <!-- 画板颜色 -->
+    <color name="pen_c_1">#FC60EA</color>
+    <color name="pen_c_2">#FC7542</color>
+    <color name="pen_c_3">#3F9CFB</color>
+    <color name="pen_c_4">#54DD31</color>
+    <color name="pen_c_5">#FEC73A</color>
+    <color name="pen_c_6">#ff000000</color>
+    <color name="pen_c_7">#6D6D6D</color>
+    <color name="gray">#F0F0F0</color>
+    <color name="login_gray">#848484</color>
+    <color name="textview">#575a5d</color>
+    <color name="time_dialog">#E8A731</color>
+    <color name="text_default_color">#575a5d</color>
+    <color name="gray_btn_color">#D9D9D9</color>
+    <color name="gray_gray">#ffe3e3e3</color>
+
+    <!-- dialog -->
+    <color name="dialog_title">#1F5164</color>
+    <color name="dialog_button_bg">#D9D9D9</color>
+
+
 </resources>

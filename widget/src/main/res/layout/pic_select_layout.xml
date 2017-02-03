@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/camera_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1.0"
+        android:gravity="center_vertical|center"
+        android:tag="1"
+        android:text="@string/camera_str"
+        android:textColor="@drawable/text_blue_to_red_selector"
+        android:textSize="@dimen/title_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EBEBEB" />
+
+    <TextView
+        android:id="@+id/album_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1.0"
+        android:gravity="center_vertical|center"
+        android:tag="2"
+        android:text="@string/album_str"
+        android:textColor="@drawable/text_blue_to_red_selector"
+        android:textSize="@dimen/title_size" />
+
+</LinearLayout>

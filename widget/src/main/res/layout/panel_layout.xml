@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/toolbar_ly" android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/gjt_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp" >
+
+        <ImageButton
+            android:id="@+id/del_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/del_all_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/pen_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/cx_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/pen_go_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/go_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/color_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/colour7_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/paint_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/pen_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/shape_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/xz_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/peraser_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/xp_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/pic_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:src="@drawable/pic_icon"
+            tools:ignore="ContentDescription" />
+         <ImageButton
+            android:id="@+id/save_panel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:src="@drawable/keep"
+            tools:ignore="ContentDescription" />
+         <ImageButton
+            android:id="@+id/history_panel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:src="@drawable/history"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_ly" >
+        <yaohf.com.widget.panel.SketchPadView
+            android:id="@+id/sketchpad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        </FrameLayout>
+
+</RelativeLayout>
