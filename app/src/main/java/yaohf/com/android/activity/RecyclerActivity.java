@@ -16,9 +16,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.L;
 import yaohf.com.android.R;
 import yaohf.com.android.stackFragment.test.FramentMainActivity;
+import yaohf.com.tool.L;
 import yaohf.com.widget.recyclerview.ItemTouchAdapter;
 import yaohf.com.widget.recyclerview.ItemTouchAdapterWrapper;
 import yaohf.com.widget.recyclerview.ItemTouchHelperCallback;

@@ -9,8 +9,7 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.Map;
 
 import yaohf.com.api.IRequestCallback;
-import yaohf.com.api.utils.JsonUtil;
-import yaohf.com.api.utils.VolleyManager;
+import yaohf.com.tool.JsonUtil;
 
 /**
  * Volley 实现

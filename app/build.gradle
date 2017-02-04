@@ -27,4 +27,5 @@ dependencies {
     compile project(':model')
     compile project(':core')
     compile project(':widget')
+    compile project(':tool')
 }

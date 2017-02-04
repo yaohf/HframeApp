@@ -10,9 +10,9 @@ import java.util.Map;
 import yaohf.com.api.ApiResponse;
 import yaohf.com.api.IRequestCallback;
 import yaohf.com.api.net.HttpEngine;
-import yaohf.com.api.utils.JsonUtil;
-import yaohf.com.api.utils.L;
-import yaohf.com.model.CouponBO;
+import yaohf.com.model.bean.UserInfo;
+import yaohf.com.tool.JsonUtil;
+import yaohf.com.tool.L;
 
 /**
  * Created by viqgd on 2017/1/13.
@@ -42,7 +42,7 @@ public class HttpRequestManager implements IRequestManager{
     @Override
     public void post(String url, Map<String,String> params, IRequestCallback callback) {
         L.v("url>>" + url);
-        Type type = new TypeToken<ApiResponse<List<CouponBO>>>() {
+        Type type = new TypeToken<ApiResponse<List<UserInfo>>>() {
         }.getType();
 
         String requestBodyJson = JsonUtil.getJsonStrs(params);

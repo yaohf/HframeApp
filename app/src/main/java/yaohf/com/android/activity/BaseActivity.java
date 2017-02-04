@@ -182,7 +182,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             mIntent.putExtras(bundle);
         }
         startActivity(mIntent);
-        finish();
     }
 
 

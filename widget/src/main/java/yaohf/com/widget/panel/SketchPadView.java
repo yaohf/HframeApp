@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import utils.BitmapUtil;
-import utils.L;
+import yaohf.com.tool.L;
 
 /**
  * The SketchPadView class provides method to draw strokes on it like as a

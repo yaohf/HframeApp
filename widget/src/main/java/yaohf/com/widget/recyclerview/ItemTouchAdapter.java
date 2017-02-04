@@ -7,18 +7,19 @@ import android.view.View;
 
 import java.util.List;
 
-import utils.L;
+import yaohf.com.tool.L;
 import yaohf.com.widget.R;
 
 /**
  * Item 跨行滑动
  */
-public class ItemTouchAdapter extends RecyclerAdapter<String> {
+public class ItemTouchAdapter<T> extends RecyclerAdapter<String> {
 
     public ItemTouchAdapter(Context ctx, List<String> list)
     {
         super(ctx, list);
     }
+
 
     @Override
     protected int getItemLayoutId(int viewType)

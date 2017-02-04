@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import utils.L;
+import yaohf.com.tool.L;
 import yaohf.com.widget.R;
 import yaohf.com.widget.panel.ISketchListener;
 import yaohf.com.widget.panel.PanelPreferencesUtils;

@@ -6,10 +6,11 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="23"/>
-    <!-- <uses-sdk tools:overrideLibrary="yaohf.com.widget"/>-->
+    <!-- <uses-sdk tools:overrideLibrary="yaohf.com.tool"/>-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".ApplicationManager"
@@ -29,8 +30,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".activity.MainActivity">
         </activity>
         <activity
             android:name=".activity.RecyclerActivity"

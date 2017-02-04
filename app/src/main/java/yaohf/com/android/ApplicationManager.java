@@ -17,7 +17,7 @@ package yaohf.com.android;
 
 import android.app.Application;
 
-import yaohf.com.api.utils.VolleyManager;
+import yaohf.com.api.manager.VolleyManager;
 import yaohf.com.core.AppAction;
 import yaohf.com.core.AppActionImpl;
 

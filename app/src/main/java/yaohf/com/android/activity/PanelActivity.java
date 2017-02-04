@@ -27,7 +27,7 @@ import utils.BitmapUtil;
 import utils.SelectorUtils;
 import utils.WidGetUtils;
 import yaohf.com.android.R;
-import yaohf.com.api.utils.L;
+import yaohf.com.tool.L;
 import yaohf.com.widget.panel.ISketchAbstractListener;
 import yaohf.com.widget.panel.ISketchListener;
 import yaohf.com.widget.panel.SketchPadView;

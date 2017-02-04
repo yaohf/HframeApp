@@ -1,4 +1,4 @@
-package yaohf.com.api.utils;
+package yaohf.com.tool;
 
 import android.text.TextUtils;
 
@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by viqgd on 2017/1/14.
+ * JsonUtil 工具类
  */
 
 public class JsonUtil {

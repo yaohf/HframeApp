@@ -39,6 +39,7 @@ import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
 import Decoder.BASE64Encoder;
+import yaohf.com.tool.L;
 
 public class BitmapUtil {
 
