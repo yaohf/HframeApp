@@ -39,5 +39,6 @@
     <string name="toast_login_success">登录成功</string>
     <string name="toast_code_has_sent">验证码已发送到手机</string>
     <string name="toast_register_success">注册成功</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>

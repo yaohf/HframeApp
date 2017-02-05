@@ -26,4 +26,5 @@
     <dimen name="edit_vertical_margin">5dp</dimen>
 
     <dimen name="btn_vertical_margin">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

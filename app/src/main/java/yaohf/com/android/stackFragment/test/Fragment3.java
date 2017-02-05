@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import yaohf.com.android.R;
+import yaohf.com.android.activity.TEventActivity;
 import yaohf.com.android.stackFragment.RootFragment;
+import yaohf.com.tool.tevent.TEvent;
 
 
 /**
@@ -37,12 +39,15 @@ public class Fragment3 extends RootFragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.fragment1:
                 open(new Fragment1());
+                TEvent.trigger(TEventActivity.TAG,new Object[]{1,Fragment1.class.getName()});
                 break;
             case R.id.fragment2:
                 open(new Fragment2());
+                TEvent.trigger(TEventActivity.TAG,new Object[]{2,Fragment2.class.getName()});
                 break;
             case R.id.fragment4:
                 open(new Fragment4());
+                TEvent.trigger(TEventActivity.TAG,new Object[]{3,Fragment3.class.getName()});
                 break;
         }
     }

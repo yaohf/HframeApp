@@ -21,7 +21,7 @@ package yaohf.com.api;
 public interface Api {
 
     //测试
-    public final static String TEST_HTTP_URL = "http://dict.hjenglish.com/json/daily/jp?cb=onDone";
+    public final static String TEST_HTTP_URL = "http://www.9y1a.com/view/game/game.html?code=cqssc";
 
 
 }

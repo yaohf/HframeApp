@@ -97,6 +97,8 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
     private static final int FRAGMENT_STACK_CLICK = 1;
     //涂鸦板绘画
     private static final int PANEL_CLICK = 2;
+    //Tevent
+    private static final int TEVENT_HANDLER = 3;
     RecyclerAdapter.OnItemClickListener itemClickListener = new RecyclerAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View itemView, int pos) {
@@ -110,6 +112,10 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
                 case PANEL_CLICK:
                     startActivity(PanelActivity.class,null);
                     break;
+                case TEVENT_HANDLER:
+                    startActivity(TEventActivity.class,null);
+                    break;
+
             }
         }
     };
