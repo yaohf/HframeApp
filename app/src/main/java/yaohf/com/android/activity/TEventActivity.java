@@ -43,14 +43,17 @@ public class TEventActivity extends BaseActivity implements ITEvent{
     {
         //TAG 注册Type,区别开接收消息对象
         //this 实现接口类
-        TEvent.register(TAG,this);
+        // 第一个参数，可以任意值，可以是String ,也可以是其它类型,但必须具备唯一性；
+        // 如果出现两个相同的注册Type,则消息会发给两个注册者，两个注册者都能收到消息；
+        // 同理，一个类中，可以注册多个TEvent,接收不同的消息体，
+        TEvent.register(TEventActivity.class,this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //解绑定 与 TEvent.register(TAG,this);成对出现
-        TEvent.unregister(TAG,this);
+        TEvent.unregister(TEventActivity.class,this);
     }
     @Override
     public void onCreateNow(Bundle savedInstanceState) {
@@ -61,7 +64,6 @@ public class TEventActivity extends BaseActivity implements ITEvent{
     protected void activityHanlderMessage(Message m) {
 
     }
-
     /**
      * Set the time to click to Prevent repeated clicks,default 500ms
      *

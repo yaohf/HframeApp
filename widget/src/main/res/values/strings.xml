@@ -21,4 +21,6 @@
     <string name="sd_full">硬盘已满，请清除部分图片后，再拍照</string>
     <string name="picture_is_null">图片为空，请重新选择</string>
 
+    <string name="loading">加载中...</string>
+
 </resources>

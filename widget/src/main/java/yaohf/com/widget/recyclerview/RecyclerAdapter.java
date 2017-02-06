@@ -22,8 +22,8 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     protected final Context mContext;
 
     protected LayoutInflater mInflater;
-    private OnItemClickListener mClickListener;
-    private OnItemLongClickListener mLongClickListener;
+    protected OnItemClickListener mClickListener;
+    protected OnItemLongClickListener mLongClickListener;
 
     public RecyclerAdapter(Context ctx, List<T> list) {
         mItems = (list != null) ? list : new ArrayList<T>();
@@ -31,6 +31,8 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         mInflater = LayoutInflater.from(ctx);
 
     }
+
+
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

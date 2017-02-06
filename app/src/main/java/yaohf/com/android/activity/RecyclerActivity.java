@@ -61,7 +61,7 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView =  findById(R.id.recyclerView);
         mDataList = new ArrayList<>();
         mDataList.add(ITEM_1);
         mDataList.add(ITEM_2);
