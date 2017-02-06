@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import yaohf.com.tool.L;
+
 /**
  * Created by viqgd on 2017/1/18.
  */
@@ -39,7 +41,8 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mClickListener.onItemClick(holder.itemView, holder.getLayoutPosition());
+                    L.v("item click index>>" + holder.getLayoutPosition());
+                    mClickListener.onItemClick(holder.itemView, mItems.get(holder.getLayoutPosition()), holder.getLayoutPosition());
                 }
             });
         }
@@ -48,7 +51,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    mLongClickListener.onItemLongClick(holder.itemView, holder.getLayoutPosition());
+                    mLongClickListener.onItemLongClick(holder.itemView,mItems.get(holder.getLayoutPosition()), holder.getLayoutPosition());
                     return true;
                 }
             });
@@ -114,14 +117,14 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 自定义Item Click event
      */
     public interface OnItemClickListener {
-        void onItemClick(View itemView, int pos);
+        void onItemClick(View itemView,Object item,int pos);
     }
 
     /**
      * 自定义item long event
      */
     public interface OnItemLongClickListener {
-        void onItemLongClick(View itemView, int pos);
+        void onItemLongClick(View itemView,Object item,int pos);
     }
 
      public final void setOnItemClickListener(OnItemClickListener listener) {

@@ -38,6 +38,10 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
     private ItemTouchHelper mItemTouchHelper;
     private ItemTouchAdapterWrapper wrapper;
 
+    private static final String ITEM_1 = "Frament Stack 管理";
+    private static final String ITEM_2 = "涂鸦板";
+    private static final String ITEM_3 = "TEvent 代替EventBus";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +63,9 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mDataList = new ArrayList<>();
-        mDataList.add("Frament Stack 管理");
-        mDataList.add("涂鸦板");
+        mDataList.add(ITEM_1);
+        mDataList.add(ITEM_2);
+        mDataList.add(ITEM_3);
         final int count = mDataList.size();
         for (int i = count; i <= 100; i++) {
             mDataList.add(String.valueOf(i));
@@ -70,12 +75,12 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         mAdapter = new ItemTouchAdapter(this,mDataList);
         wrapper=new ItemTouchAdapterWrapper((ItemTouchAdapter) mAdapter);
         wrapper.addFooter(R.layout.footer_load_more);
-        wrapper.addHeader(R.layout.header);
+//        wrapper.addHeader(R.layout.header);
         //添加item点击事件监听
         mAdapter.setOnItemClickListener(itemClickListener);
         mAdapter.setOnItemLongClickListener(new RecyclerAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(View itemView, int pos) {
+            public void onItemLongClick(View itemView,Object item, int pos) {
                 Toast.makeText(RecyclerActivity.this, "long click " + pos, Toast.LENGTH_SHORT).show();
             }
         });
@@ -94,25 +99,22 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
     //Fragment Stack test
-    private static final int FRAGMENT_STACK_CLICK = 1;
-    //涂鸦板绘画
-    private static final int PANEL_CLICK = 2;
-    //Tevent
-    private static final int TEVENT_HANDLER = 3;
     RecyclerAdapter.OnItemClickListener itemClickListener = new RecyclerAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(View itemView, int pos) {
-            L.v("pos>>" + pos);
-            switch(pos)
+        public void onItemClick(View itemView,Object item, int pos) {
+            String value = String.valueOf(item);
+            Toast.makeText(mContext,value,Toast.LENGTH_SHORT).show();
+            L.v("value>>" + value);
+            switch(value)
             {
                 //Fragment Stack test
-                case FRAGMENT_STACK_CLICK:
+                case ITEM_1:
                     startActivity(FramentMainActivity.class,null);
                     break;
-                case PANEL_CLICK:
+                case ITEM_2:
                     startActivity(PanelActivity.class,null);
                     break;
-                case TEVENT_HANDLER:
+                case ITEM_3:
                     startActivity(TEventActivity.class,null);
                     break;
 

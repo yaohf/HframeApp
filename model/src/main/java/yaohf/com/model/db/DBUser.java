@@ -93,7 +93,7 @@ public class DBUser implements DBInterface<UserInfo> {
             return;
 
         StringBuilder sql = new StringBuilder()
-                .append("inert into ")
+                .append("insert into ")
                 .append(TABLE_NAME)
                 .append("(")
                 .append(USER_NAME)
