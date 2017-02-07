@@ -68,17 +68,15 @@ public class LoginActivity extends BaseActivity {
 
     // 初始化View
     private void initViews() {
-        phoneEdit = (EditText) findViewById(R.id.edit_phone);
-        passwordEdit = (EditText) findViewById(R.id.edit_password);
-        loginBtn = (Button) findViewById(R.id.btn_login);
+        phoneEdit =  findById(R.id.edit_phone);
+        passwordEdit = findById(R.id.edit_password);
+        loginBtn = findById(R.id.btn_login);
     }
 
     // 准备登录
     public void toLogin(View view) {
         String loginName = phoneEdit.getText().toString();
         String password = passwordEdit.getText().toString();
-
-
 
         DBUser dbUser = new DBUser(mContext);
         UserInfo info = new UserInfo(loginName, EncryptUtil.makeMD5(password), "", "姚益", 1);

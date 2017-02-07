@@ -41,6 +41,7 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
     private static final String ITEM_1 = "Frament Stack 管理";
     private static final String ITEM_2 = "涂鸦板";
     private static final String ITEM_3 = "TEvent 代替EventBus";
+    private static final String ITEM_4 = "Hook click";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         mDataList.add(ITEM_1);
         mDataList.add(ITEM_2);
         mDataList.add(ITEM_3);
+        mDataList.add(ITEM_4);
         final int count = mDataList.size();
         for (int i = count; i <= 100; i++) {
             mDataList.add(String.valueOf(i));
@@ -117,7 +119,9 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
                 case ITEM_3:
                     startActivity(TEventActivity.class,null);
                     break;
-
+                case ITEM_4:
+                    startActivity(HookActivity.class,null);
+                    break;
             }
         }
     };

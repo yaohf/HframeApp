@@ -45,6 +45,10 @@
             android:name=".activity.TEventActivity"
             >
         </activity>
+        <activity
+            android:name=".activity.HookActivity"
+            >
+        </activity>
     </application>
 
 </manifest>
