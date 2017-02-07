@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <Button
+        android:id="@+id/btn_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Button" />
+
+    <FrameLayout
+        android:id="@+id/fl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp">
+
+        <yaohf.com.widget.countdown.RoundProgressBarView
+            android:id="@+id/roundView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button1"
+            android:layout_gravity="center_horizontal"
+            android:padding="20dp"
+            custom:bottomTextColor="#000000"
+            custom:bottomTextSize="10dp"
+            custom:roundColor="#757575"
+            custom:roundProgressOneColor="#8a8a8a"
+            custom:roundProgressOneWidth="2dp"
+            custom:roundProgressThreeColor="#ffcb05"
+            custom:roundProgressThreeWidth="6dp"
+            custom:roundProgressTwoColor="#b0b0b0"
+            custom:roundProgressTwoWidth="3dp"
+            custom:roundWidth="1dp"
+            custom:smallRoundWidth="6dp"
+            custom:topTextColor="#000000"
+            custom:topTextSize="60dp" />
+
+        <View
+            android:layout_width="120dp"
+            android:layout_height="1px"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="#000000">
+
+        </View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:text="目标: 70KM" />
+    </FrameLayout>
+    <yaohf.com.widget.countdown.CountDownProgressView
+        android:id="@+id/countDownView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fl"
+        android:layout_centerInParent="true"
+        android:padding="20dp"/>
+</RelativeLayout>

@@ -49,6 +49,10 @@
             android:name=".activity.HookActivity"
             >
         </activity>
+        <activity
+            android:name=".activity.CountDownActivity"
+            >
+        </activity>
     </application>
 
 </manifest>
