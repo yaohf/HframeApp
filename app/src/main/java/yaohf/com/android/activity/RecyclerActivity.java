@@ -43,6 +43,7 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
     private static final String ITEM_3 = "TEvent 代替EventBus";
     private static final String ITEM_4 = "Hook click";
     private static final String ITEM_5 = "倒计时控件";
+    private static final String ITEM_6 = "Lite-ROM数据库";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         mDataList.add(ITEM_3);
         mDataList.add(ITEM_4);
         mDataList.add(ITEM_5);
+        mDataList.add(ITEM_6);
         final int count = mDataList.size();
         for (int i = count; i <= 100; i++) {
             mDataList.add(String.valueOf(i));
@@ -126,6 +128,9 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
                     break;
                 case ITEM_5:
                     startActivity(CountDownActivity.class,null);
+                    break;
+                case ITEM_6:
+                    startActivity(LiteOrmActivity.class,null);
                     break;
             }
         }

@@ -43,16 +43,16 @@
         <activity android:name=".stackFragment.test.FramentMainActivity"/>
         <activity
             android:name=".activity.TEventActivity"
-            >
-        </activity>
+            />
         <activity
             android:name=".activity.HookActivity"
-            >
-        </activity>
+            />
         <activity
             android:name=".activity.CountDownActivity"
-            >
-        </activity>
+            />
+        <activity
+            android:name=".activity.LiteOrmActivity"
+            />
     </application>
 
 </manifest>

@@ -106,5 +106,6 @@
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
     <orderEntry type="module" module-name="model" exported="" />
     <orderEntry type="module" module-name="tool" exported="" />
+    <orderEntry type="library" exported="" name="lite-orm-1.9.1" level="project" />
   </component>
 </module>

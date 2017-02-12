@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="orm_test_case">
+        <item>保存(Insert Or Update)</item>
+        <item>新增(Insert)</item>
+        <item>LiteOrm 更快：大量数据测试(100,000)</item>
+        <item>更新 指定列</item>
+        <item>查找 全部</item>
+        <item>查找 Where</item>
+        <item>删除全部</item>
+    </string-array>
+</resources>

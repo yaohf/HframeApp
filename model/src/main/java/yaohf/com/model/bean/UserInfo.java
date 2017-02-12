@@ -1,14 +1,24 @@
 package yaohf.com.model.bean;
 
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
+
 import java.io.Serializable;
 
 /**
  * User 登录用户，保存基础数据
  */
+@Table("UserInfo")
 public class UserInfo implements Serializable {
 
 
     private static final long serialVersionUID = -7269279534300498717L;
+
+    //自定义主键
+    @PrimaryKey(AssignType.BY_MYSELF)
+    private String userName;
+    private int sex;
 
     private String passMd5;
     private String photo;
@@ -23,8 +33,6 @@ public class UserInfo implements Serializable {
         this.sex = sex;
     }
 
-    private String userName;
-    private int sex;
 
     public String getRealName() {
         return realName;
