@@ -9,4 +9,13 @@
         <item>查找 Where</item>
         <item>删除全部</item>
     </string-array>
+
+    <string-array name="recycler_items">
+        <item>Frament Stack 管理</item>
+        <item>涂鸦板</item>
+        <item>TEvent 代替EventBus</item>
+        <item>Hook click</item>
+        <item>倒计时控件</item>
+        <item>Lite-ROM数据库</item>
+    </string-array>
 </resources>

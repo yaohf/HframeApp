@@ -1,27 +1,8 @@
-/**
- * Copyright (C) 2015. Keegan小钢（http://keeganlee.me）
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package yaohf.com.android.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,10 +14,14 @@ import yaohf.com.model.bean.UserInfo;
 import yaohf.com.model.db.DBUser;
 import yaohf.com.tool.EncryptUtil;
 import yaohf.com.tool.L;
+import yaohf.com.tool.permission.FramePermission;
+import yaohf.com.tool.permission.PermissionNo;
+import yaohf.com.tool.permission.PermissionYes;
 
 
 /**
  * 登录
+ *
  * @version 1.0
  */
 public class LoginActivity extends BaseActivity {
@@ -45,8 +30,9 @@ public class LoginActivity extends BaseActivity {
     private EditText passwordEdit;
     private Button loginBtn;
 
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final int SDCARD_REQEST_CODE = 100;
+
+    private static final  String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -56,9 +42,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         // 初始化View
         initViews();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            verifyStoragePermissions(this);
-        }
+
     }
 
     @Override
@@ -66,9 +50,28 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    public void requsetSDCardPermission() {
+        FramePermission.with(this)
+                .requestCode(SDCARD_REQEST_CODE)
+                .permission(PERMISSIONS_STORAGE)
+                .send();
+    }
+
+
+    @PermissionYes(SDCARD_REQEST_CODE)
+    private void requestSdcardSuccess(){
+        Toast.makeText(mContext, "GRANT ACCESS SDCARD!", Toast.LENGTH_SHORT).show();
+    }
+    @PermissionNo(SDCARD_REQEST_CODE)
+    private void requestSdcardFailed(){
+        Toast.makeText(mContext, "DENY ACCESS SDCARD!", Toast.LENGTH_SHORT).show();
+    }
+
+
+
     // 初始化View
     private void initViews() {
-        phoneEdit =  findById(R.id.edit_phone);
+        phoneEdit = findById(R.id.edit_phone);
         passwordEdit = findById(R.id.edit_password);
         loginBtn = findById(R.id.btn_login);
     }
@@ -77,6 +80,8 @@ public class LoginActivity extends BaseActivity {
     public void toLogin(View view) {
         String loginName = phoneEdit.getText().toString();
         String password = passwordEdit.getText().toString();
+
+        requsetSDCardPermission();
 
         DBUser dbUser = new DBUser(mContext);
         UserInfo info = new UserInfo(loginName, EncryptUtil.makeMD5(password), "", "姚益", 1);
@@ -99,19 +104,5 @@ public class LoginActivity extends BaseActivity {
                 finish();
             }
         });
-    }
-
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE);
-        }
-
-
     }
 }

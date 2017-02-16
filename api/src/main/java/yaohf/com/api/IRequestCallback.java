@@ -1,9 +1,5 @@
 package yaohf.com.api;
 
-/**
- * Created by viqgd on 2017/1/13.
- */
-
 public interface IRequestCallback <T> {
     /**
      * 成功时调用

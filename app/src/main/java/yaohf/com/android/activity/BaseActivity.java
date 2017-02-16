@@ -1,27 +1,17 @@
-/**
- * Copyright (C) 2015. Keegan小钢（http://keeganlee.me）
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package yaohf.com.android.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.AnimRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import yaohf.com.android.ApplicationManager;
 import yaohf.com.android.R;
@@ -36,6 +27,7 @@ import yaohf.com.android.stackFragment.KeyCallBack;
 import yaohf.com.android.stackFragment.RootFragment;
 import yaohf.com.android.stackFragment.StackManager;
 import yaohf.com.core.AppAction;
+import yaohf.com.tool.permission.FramePermission;
 
 
 /**
@@ -64,6 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if(getRootFragment() != null)
         {
             initFragment(savedInstanceState);
+            clearFragmentManagerInsideFragments(this);
         }
     }
 
@@ -115,6 +108,40 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 处理用户选择后的回调，包括允许权限和拒绝。
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        FramePermission.onRequestPermissionsResult(this,requestCode,permissions,grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+
+    /**
+     * 清理 FragmentManager 中的 Fragment。<br/>
+     * 解决在系统设置中更改权限后，App 被 kill 掉重启时的 Fragment 状态错误问题。
+     *
+     * @param activity
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void clearFragmentManagerInsideFragments(Activity activity) {
+        if (activity instanceof FragmentActivity) {
+            FragmentManager manager = ((FragmentActivity) activity).getSupportFragmentManager();
+            int count = manager.getBackStackEntryCount();
+            List<Fragment> list = manager.getFragments();
+            int fragmentCount = list == null ? 0 : list.size();
+            if (list != null) {
+                for (Fragment fragment : list) {
+                    manager.beginTransaction().remove(fragment).commit();
+                }
+            }
+
+        }
+    }
 
     @Override
     public final boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -134,6 +161,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+
     /**
      * Set button to click callback
      *
@@ -144,7 +173,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     *　简化FindVViewById
      * @param id
      * @param <T>
      * @return

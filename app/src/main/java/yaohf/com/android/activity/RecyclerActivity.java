@@ -13,7 +13,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import yaohf.com.android.R;
@@ -26,7 +26,7 @@ import yaohf.com.widget.recyclerview.RecyclerAdapter;
 import yaohf.com.widget.recyclerview.listener.RvFabOffsetHidingScrollListener;
 import yaohf.com.widget.recyclerview.listener.RvToolbarOffsetHidingScrollListener;
 
-public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.OnStartActionListener{
+public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.OnStartActionListener {
 
     List<String> mDataList;
     private RecyclerView recyclerView;
@@ -38,25 +38,24 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
     private ItemTouchHelper mItemTouchHelper;
     private ItemTouchAdapterWrapper wrapper;
 
-    private static final String ITEM_1 = "Frament Stack 管理";
-    private static final String ITEM_2 = "涂鸦板";
-    private static final String ITEM_3 = "TEvent 代替EventBus";
-    private static final String ITEM_4 = "Hook click";
-    private static final String ITEM_5 = "倒计时控件";
-    private static final String ITEM_6 = "Lite-ROM数据库";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
+        initData();
         init();
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    }
+
+    private void initData() {
+        String[] initItem = mContext.getResources().getStringArray(R.array.recycler_items);
+        mDataList = Arrays.asList(initItem);
+
+        final int count = mDataList.size();
+        for (int i = count; i <= 100; i++) {
+            mDataList.add(String.valueOf(i));
+        }
+        initItem = null;
     }
 
     private void init() {
@@ -64,74 +63,68 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        recyclerView =  findById(R.id.recyclerView);
-        mDataList = new ArrayList<>();
-        mDataList.add(ITEM_1);
-        mDataList.add(ITEM_2);
-        mDataList.add(ITEM_3);
-        mDataList.add(ITEM_4);
-        mDataList.add(ITEM_5);
-        mDataList.add(ITEM_6);
-        final int count = mDataList.size();
-        for (int i = count; i <= 100; i++) {
-            mDataList.add(String.valueOf(i));
-        }
+        recyclerView = findById(R.id.recyclerView);
+
+
         //设置item动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new ItemTouchAdapter(this,mDataList);
-        wrapper=new ItemTouchAdapterWrapper((ItemTouchAdapter) mAdapter);
+        mAdapter = new ItemTouchAdapter(this, mDataList);
+        wrapper = new ItemTouchAdapterWrapper((ItemTouchAdapter) mAdapter);
         wrapper.addFooter(R.layout.footer_load_more);
 //        wrapper.addHeader(R.layout.header);
         //添加item点击事件监听
         mAdapter.setOnItemClickListener(itemClickListener);
         mAdapter.setOnItemLongClickListener(new RecyclerAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(View itemView,Object item, int pos) {
-                Toast.makeText(RecyclerActivity.this, "long click " + pos, Toast.LENGTH_SHORT).show();
+            public void onItemLongClick(View itemView, Object item, int pos) {
+                Toast.makeText(mContext, "long click " + pos, Toast.LENGTH_SHORT).show();
             }
         });
-
-
         //设置布局样式LayoutManager
-        final GridLayoutManager gridLayout = new GridLayoutManager(mContext,3);
+        final GridLayoutManager gridLayout = new GridLayoutManager(mContext, 3);
 //      final LinearLayoutManager linearLayout = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(gridLayout);
         recyclerView.setAdapter(wrapper);
         recyclerView.addOnScrollListener(new RvToolbarOffsetHidingScrollListener(this, mToolbar));
-        recyclerView.addOnScrollListener(new RvFabOffsetHidingScrollListener(this,fab));
+        recyclerView.addOnScrollListener(new RvFabOffsetHidingScrollListener(this, fab));
 
         mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(wrapper));
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
     }
+
     //Fragment Stack test
     RecyclerAdapter.OnItemClickListener itemClickListener = new RecyclerAdapter.OnItemClickListener() {
+
         @Override
-        public void onItemClick(View itemView,Object item, int pos) {
+        public void onItemClick(View itemView, Object item, int pos) {
             String value = String.valueOf(item);
-            Toast.makeText(mContext,value,Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, value, Toast.LENGTH_SHORT).show();
+
+            String[] initItem = mContext.getResources().getStringArray(R.array.recycler_items);
             L.v("value>>" + value);
-            switch(value)
-            {
-                //Fragment Stack test
-                case ITEM_1:
-                    startActivity(FramentMainActivity.class,null);
-                    break;
-                case ITEM_2:
-                    startActivity(PanelActivity.class,null);
-                    break;
-                case ITEM_3:
-                    startActivity(TEventActivity.class,null);
-                    break;
-                case ITEM_4:
-                    startActivity(HookActivity.class,null);
-                    break;
-                case ITEM_5:
-                    startActivity(CountDownActivity.class,null);
-                    break;
-                case ITEM_6:
-                    startActivity(LiteOrmActivity.class,null);
-                    break;
+
+            if (value.equals(initItem[0])) {
+                startActivity(FramentMainActivity.class, null);
+            } else if (value.equals(initItem[1])) {
+                startActivity(PanelActivity.class, null);
+            } else if (value.equals(initItem[2])) {
+                startActivity(TEventActivity.class, null);
+            } else if (value.equals(initItem[3])) {
+                startActivity(HookActivity.class, null);
+            } else if (value.equals(initItem[4])) {
+                startActivity(CountDownActivity.class, null);
+            } else if (value.equals(initItem[5])) {
+                startActivity(LiteOrmActivity.class, null);
             }
         }
     };

@@ -14,9 +14,6 @@ import yaohf.com.model.bean.UserInfo;
 import yaohf.com.tool.JsonUtil;
 import yaohf.com.tool.L;
 
-/**
- * Created by viqgd on 2017/1/13.
- */
 
 public class HttpRequestManager implements IRequestManager{
 
