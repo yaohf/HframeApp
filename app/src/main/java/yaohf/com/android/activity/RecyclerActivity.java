@@ -13,7 +13,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import yaohf.com.android.R;
@@ -49,7 +49,12 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
 
     private void initData() {
         String[] initItem = mContext.getResources().getStringArray(R.array.recycler_items);
-        mDataList = Arrays.asList(initItem);
+        mDataList = new ArrayList<String>();
+
+        for(String str : initItem)
+        {
+            mDataList.add(str);
+        }
 
         final int count = mDataList.size();
         for (int i = count; i <= 100; i++) {

@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity {
 
     @PermissionYes(SDCARD_REQEST_CODE)
     private void requestSdcardSuccess(){
-        Toast.makeText(mContext, "GRANT ACCESS SDCARD!", Toast.LENGTH_SHORT).show();
+        L.v("GRANT ACCESS SDCARD!");
     }
     @PermissionNo(SDCARD_REQEST_CODE)
     private void requestSdcardFailed(){
@@ -91,18 +91,20 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(Object data) {
                 L.v("data>>" + data);
-                Toast.makeText(mContext, "成功", Toast.LENGTH_SHORT).show();
                 startActivity(RecyclerActivity.class, null);
                 finish();
+                L.v("end");
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                L.v("message>>" + message);
+                L.v("start");
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                 startActivity(RecyclerActivity.class, null);
                 finish();
+                L.v("end");
             }
         });
+
     }
 }

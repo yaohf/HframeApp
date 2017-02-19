@@ -16,14 +16,19 @@ public class L {
 		if(DEBUG){
 			Log.v(TAG, getContent(tag,method, msg));
 		}
-	} 
-	
+	}
+
 	public static void v(Object msg){
 		if(DEBUG){
 			Log.v(TAG, getContent() + ">>" + msg);
 		}
 	}
-	
+	public static void v(String tag,Object msg){
+		if(DEBUG){
+			Log.v(tag, getContent() + ">>" + msg);
+		}
+	}
+
 //	public static void v(Object msg,String msgValue){
 //		if(DEBUG){
 //			Log.v(TAG, getContent() + ">>" + String.format("[%s][%s]", msg,msgValue));

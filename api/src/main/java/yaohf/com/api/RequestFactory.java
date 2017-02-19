@@ -1,6 +1,5 @@
 package yaohf.com.api;
 
-import yaohf.com.api.manager.IRequestManager;
 import yaohf.com.api.manager.VolleyRequestManager;
 
 

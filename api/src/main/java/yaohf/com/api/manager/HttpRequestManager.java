@@ -9,13 +9,16 @@ import java.util.Map;
 
 import yaohf.com.api.ApiResponse;
 import yaohf.com.api.IRequestCallback;
+import yaohf.com.api.IRequestManager;
 import yaohf.com.api.net.HttpEngine;
-import yaohf.com.model.bean.UserInfo;
 import yaohf.com.tool.JsonUtil;
 import yaohf.com.tool.L;
 
-
-public class HttpRequestManager implements IRequestManager{
+/**
+ * http Manager
+ * @param <T>
+ */
+public class HttpRequestManager<T> implements IRequestManager {
 
     private static HttpRequestManager instance;
     private HttpEngine httpEngine;
@@ -30,42 +33,71 @@ public class HttpRequestManager implements IRequestManager{
         return instance;
     }
 
-
     @Override
-    public void get(String url,IRequestCallback callback) {
-
+    public T synchroGet(String url, Map params) {
+        L.v("start>>" + url);
+        Type type = new TypeToken<ApiResponse<List<T>>>() {
+        }.getType();
+        T result = null;
+        try {
+            result = httpEngine.getHandle(url, params, type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        L.v("end");
+        return result;
     }
 
     @Override
-    public void post(String url, Map<String,String> params, IRequestCallback callback) {
-        L.v("url>>" + url);
-        Type type = new TypeToken<ApiResponse<List<UserInfo>>>() {
+    public T synchroPost(String url, Map params) {
+        L.v("start>>" + url);
+        Type type = new TypeToken<ApiResponse<List<T>>>() {
         }.getType();
 
         String requestBodyJson = JsonUtil.getJsonStrs(params);
-        String result = null;
+        T result = null;
         try {
             result = httpEngine.postHandle(url, requestBodyJson, type);
-            if(JsonUtil.isJsonType(result))
-            {
-                callback.onSuccess(result);
-            }else{
-                callback.onFailure("json error",result);
-            }
-            L.v("result>>" + result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        L.v("end");
+        return result;
+    }
+
+
+
+    @Override
+    public void get(String url,Map params,IRequestCallback callback) {
+        L.v("start>>" + url);
+        Type type = new TypeToken<ApiResponse<List<T>>>() {
+        }.getType();
+        T result = null;
+        try {
+            result = httpEngine.getHandle(url, params, type);
+            callback.onSuccess(result);
         } catch (IOException e) {
             callback.onFailure("http io  error",e.getMessage());
             e.printStackTrace();
         }
+        L.v("end");
     }
 
     @Override
-    public void put(String url,  Map<String,String> params,IRequestCallback callback) {
+    public void post(String url, Map params, IRequestCallback callback) {
+        L.v("start>>" + url);
+        Type type = new TypeToken<ApiResponse<List<T>>>() {
+        }.getType();
+
+        String requestBodyJson = JsonUtil.getJsonStrs(params);
+        T result = null;
+        try {
+            result = httpEngine.postHandle(url, requestBodyJson, type);
+            callback.onSuccess(result);
+        } catch (IOException e) {
+            callback.onFailure("http io  error",e.getMessage());
+            e.printStackTrace();
+        }
+        L.v("end");
     }
-
-    @Override
-    public void delete(String url,  Map<String,String> params,IRequestCallback callback) {
-    }
-
-
 }

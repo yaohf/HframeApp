@@ -4,18 +4,26 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
+import yaohf.com.api.HttpUtils;
 import yaohf.com.api.IRequestCallback;
+import yaohf.com.api.IRequestManager;
+import yaohf.com.api.net.VolleyManager;
 import yaohf.com.tool.JsonUtil;
+import yaohf.com.tool.L;
 
 /**
  * Volley 实现
  */
 
-public class VolleyRequestManager implements IRequestManager {
+public class VolleyRequestManager<T> implements IRequestManager{
 
     private static VolleyRequestManager instance;
 
@@ -29,10 +37,61 @@ public class VolleyRequestManager implements IRequestManager {
         return instance;
     }
 
+
+
     @Override
-    public void get(final String url, final IRequestCallback callback) {
-        final String str = null;
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+    public T synchroGet(String url, Map params)  {
+        L.v("start >>" + url);
+        String data = url;
+        if(params != null)
+        {
+            data  = url + "?" + HttpUtils.getJoinParams(params);
+        }
+        RequestFuture future = RequestFuture.newFuture();
+        StringRequest request = new StringRequest(data, future,future);
+        VolleyManager.getRequestQueue().add(request);
+        T result = null;
+        try{
+            result = (T) future.get();
+            future.get(3000, TimeUnit.SECONDS);//添加请求超时
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        L.v("end >>" + result);
+        return result;
+    }
+
+    @Override
+    public T synchroPost(String url, Map params) {
+        L.v("start >>" + url);
+        String data = url;
+        if(params != null)
+        {
+            data  = url + "?" + HttpUtils.getJoinParams(params);
+        }
+        RequestFuture future = RequestFuture.newFuture();
+        StringRequest request = new StringRequest(Request.Method.POST,data, future,future);
+        T result = null;
+        try{
+            result = (T) future.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        VolleyManager.getRequestQueue().add(request);
+        L.v("end");
+        return result;
+    }
+
+    @Override
+    public void get(String url, Map params, final IRequestCallback callback) {
+        final String data = url + "?" + HttpUtils.getJoinParams(params);
+        StringRequest request = new StringRequest(Request.Method.GET, data, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (JsonUtil.isJsonType(response))
@@ -51,10 +110,7 @@ public class VolleyRequestManager implements IRequestManager {
     }
 
     @Override
-    public void post(String url, final Map<String, String> params, final IRequestCallback callback) {
-
-
-        final String str = null;
+    public void post(String url, final Map params, final IRequestCallback callback) {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -79,11 +135,5 @@ public class VolleyRequestManager implements IRequestManager {
 
     }
 
-    @Override
-    public void put(String url, final Map<String, String> params, IRequestCallback callback) {
-    }
 
-    @Override
-    public void delete(String url, final Map<String, String> params, IRequestCallback callback) {
-    }
 }

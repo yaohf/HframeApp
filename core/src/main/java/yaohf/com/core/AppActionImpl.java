@@ -10,8 +10,8 @@ import java.util.Map;
 import yaohf.com.api.Api;
 import yaohf.com.api.ErrorEvent;
 import yaohf.com.api.IRequestCallback;
+import yaohf.com.api.IRequestManager;
 import yaohf.com.api.RequestFactory;
-import yaohf.com.api.manager.IRequestManager;
 
 /**
  * AppAction接口的实现类
@@ -20,8 +20,7 @@ import yaohf.com.api.manager.IRequestManager;
  */
 public class AppActionImpl implements AppAction {
 
-    private final static int LOGIN_OS = 1; // 表示Android
-    private final static int PAGE_SIZE = 20; // 默认每页20条
+
 
     private Context context;
     private IRequestManager requestManager;
@@ -51,14 +50,32 @@ public class AppActionImpl implements AppAction {
         final Map<String,String> params = new HashMap<String,String>();
         params.put("username",loginName);
         params.put("password",password);
+
+        final  String url = "http://flash.weather.com.cn/wmaps/xml/china.xml";
+
         new AsyncTask<Void, Void, Void>()
         {
             @Override
             protected Void doInBackground(Void... strs) {
                   requestManager.post(Api.TEST_HTTP_URL, params,callback);
+
                 return null;
             }
         }.execute();
     }
 
+    @Override
+    public void test(final IRequestCallback callback) {
+       final  String url = "http://flash.weather.com.cn/wmaps/xml/china.xml";
+
+        new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... strs) {
+                String data = (String) requestManager.synchroGet(url,null);
+                callback.onSuccess(data);
+                return null;
+            }
+        }.execute();
+    }
 }

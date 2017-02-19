@@ -16,4 +16,6 @@ public interface AppAction {
      */
     public void login(String loginName, String password, IRequestCallback callback);
 
+    public void test(final IRequestCallback callback);
+
 }
