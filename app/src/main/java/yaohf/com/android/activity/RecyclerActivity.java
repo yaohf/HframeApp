@@ -130,6 +130,9 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
                 startActivity(CountDownActivity.class, null);
             } else if (value.equals(initItem[5])) {
                 startActivity(LiteOrmActivity.class, null);
+            }else
+            {
+                throw new RuntimeException("new thread exception...");
             }
         }
     };

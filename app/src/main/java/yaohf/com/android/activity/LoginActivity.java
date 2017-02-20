@@ -57,7 +57,6 @@ public class LoginActivity extends BaseActivity {
                 .send();
     }
 
-
     @PermissionYes(SDCARD_REQEST_CODE)
     private void requestSdcardSuccess(){
         L.v("GRANT ACCESS SDCARD!");
