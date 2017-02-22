@@ -1,6 +1,6 @@
 package yaohf.com.api;
 
-import yaohf.com.api.manager.VolleyRequestManager;
+import yaohf.com.api.manager.OKHttpClientRequsetManager;
 
 
 public class RequestFactory {
@@ -11,7 +11,9 @@ public class RequestFactory {
      * @return
      */
     public static IRequestManager getIRequestManager() {
+        return OKHttpClientRequsetManager.getInstance();
 //        return HttpRequestManager.getInstance();
-        return VolleyRequestManager.getInstance();
+//        return VolleyRequestManager.getInstance();
+
     }
 }

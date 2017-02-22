@@ -28,8 +28,14 @@ public class HttpRequestManager<T> implements IRequestManager {
     }
 
     public static HttpRequestManager getInstance() {
-        if (instance == null)
-            instance = new HttpRequestManager();
+        if(instance == null)
+        {
+            synchronized (HttpRequestManager.class)
+            {
+                if (instance == null)
+                    instance = new HttpRequestManager();
+            }
+        }
         return instance;
     }
 

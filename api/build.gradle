@@ -25,6 +25,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.okio:okio:1.5.0'
     compile project(':model')
     compile project(':tool')
+//    compile 'com.google.android.gms:play-services-basement:9.6.1'
 }

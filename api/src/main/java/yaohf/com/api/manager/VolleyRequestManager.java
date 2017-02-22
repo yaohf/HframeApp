@@ -32,8 +32,14 @@ public class VolleyRequestManager<T> implements IRequestManager{
     }
 
     public static VolleyRequestManager getInstance() {
-        if (instance == null)
-            instance = new VolleyRequestManager();
+        if(instance == null)
+        {
+            synchronized (VolleyRequestManager.class)
+            {
+                if (instance == null)
+                    instance = new VolleyRequestManager();
+            }
+        }
         return instance;
     }
 
