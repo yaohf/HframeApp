@@ -1,5 +1,7 @@
 package yaohf.com.api.manager;
 
+import com.squareup.okhttp.Request;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -62,7 +64,7 @@ public class OKHttpClientRequsetManager  implements IRequestManager{
         String data = url + "?" + HttpUtils.getJoinParams(params);
         OkHttpClientManager.getAsyn(data, new OkHttpClientManager.ResultCallback() {
             @Override
-            public void onError(Object request, Exception e) {
+            public void onError(Request request, Exception e) {
                 callback.onFailure(e.getMessage(),request.toString());
             }
 
@@ -77,7 +79,7 @@ public class OKHttpClientRequsetManager  implements IRequestManager{
     public void post(String url, Map params, final IRequestCallback callback) {
         OkHttpClientManager.postAsyn(url, new OkHttpClientManager.ResultCallback() {
             @Override
-            public void onError(Object request, Exception e) {
+            public void onError(Request request, Exception e) {
                 callback.onFailure(e.getMessage(),request.toString());
             }
 

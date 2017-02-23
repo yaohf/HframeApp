@@ -1,10 +1,12 @@
 package yaohf.com.model.db;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 import android.util.Log;
+
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabaseHook;
+import net.sqlcipher.database.SQLiteException;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +24,8 @@ public abstract class ToSDCardSQLiteOpenHelper {
     private final int mNewVersion;
     private SQLiteDatabase mDatabase = null;
     private boolean mIsInitializing = false;
+
+    private static final String PASSWROD = "12345456";
 
     public ToSDCardSQLiteOpenHelper(Context context,String path,String name, SQLiteDatabase.CursorFactory factory, int version) {
         if (version < 1) throw new IllegalArgumentException("Version must be >= 1, was " + version);
@@ -44,10 +48,24 @@ public abstract class ToSDCardSQLiteOpenHelper {
         try {
             mIsInitializing = true;
             if (mName == null) {
-                db = SQLiteDatabase.create(null);
+                db = SQLiteDatabase.create(null,PASSWROD);
             } else {
+                SQLiteDatabaseHook hook = new SQLiteDatabaseHook(){
+
+                    @Override
+                    public void preKey(SQLiteDatabase database) {
+
+                    }
+
+                    @Override
+                    public void postKey(SQLiteDatabase database) {
+//                        database.rawExecSQL("PRAGMA cipher_migrate;");  //最关键的一句！！！解密
+                        database.rawExecSQL("PRAGMA cipher_use_hmac = OFF;");
+                    }
+                };
+
                 String path = getDatabasePath(mPath,mName).getPath();
-                db = SQLiteDatabase.openOrCreateDatabase(path,mFactory);
+                db = SQLiteDatabase.openOrCreateDatabase(path,PASSWROD,mFactory,hook);
             }
             int version = db.getVersion();
             if (version != mNewVersion) {
@@ -97,7 +115,7 @@ public abstract class ToSDCardSQLiteOpenHelper {
         try {
             mIsInitializing = true;
             String path = getDatabasePath(mPath,mName).getPath();
-            db = SQLiteDatabase.openDatabase(path, mFactory, SQLiteDatabase.OPEN_READWRITE);
+            db = SQLiteDatabase.openDatabase(path,PASSWROD, mFactory, SQLiteDatabase.OPEN_READWRITE);
             if (db.getVersion() != mNewVersion) {
                 throw new SQLiteException("Can't upgrade read-only database from version " +
                         db.getVersion() + " to " + mNewVersion + ": " + path);

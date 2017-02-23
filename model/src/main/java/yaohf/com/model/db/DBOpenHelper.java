@@ -1,7 +1,6 @@
 package yaohf.com.model.db;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 public class DBOpenHelper extends ToSDCardSQLiteOpenHelper {
 
@@ -16,16 +15,14 @@ public class DBOpenHelper extends ToSDCardSQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(net.sqlcipher.database.SQLiteDatabase db) {
         db.execSQL(DBUser.SQL_CREATE_TABLE.toString());
     }
 
-
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(net.sqlcipher.database.SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < newVersion) {
 
         }
     }
-
 }

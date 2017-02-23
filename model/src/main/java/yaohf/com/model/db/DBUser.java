@@ -1,8 +1,9 @@
 package yaohf.com.model.db;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
+import net.sqlcipher.Cursor;
+import net.sqlcipher.database.SQLiteDatabase;
 
 import yaohf.com.model.bean.UserInfo;
 import yaohf.com.tool.L;

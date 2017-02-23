@@ -16,6 +16,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+//        instrumentTest.setRoot('tests')
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
 }
 
 dependencies {
@@ -23,4 +39,7 @@ dependencies {
     //    compile 'com.android.support:appcompat-v7:22.0.0'
     compile project(':tool')
     compile files('libs/lite-orm-1.9.1.jar')
+    compile files('libs/sqlcipher.jar')
+    compile files('libs/guava-r09.jar')
+    compile files('libs/commons-codec.jar')
 }

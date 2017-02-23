@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.$Gson$Types;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -24,7 +23,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -34,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 
 import yaohf.com.tool.ImageUtils;
+import yaohf.com.tool.L;
 
 /**
  * Created by viqgd on 2017/2/21.
@@ -471,14 +470,15 @@ public class OkHttpClientManager {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                final String str = response.body().toString();
+                final String str = response.body().string();
+                L.v("response >>" + str);
                 if(callback.mType == String.class)
                 {
                     sendSuccessResultCallback(str,callback);
                 }else
                 {
-                    Object obj = mGson.fromJson(str,callback.mType);
-                    sendSuccessResultCallback(obj,callback);
+//                    Object obj = mGson.fromJson(str,callback.mType);
+                    sendSuccessResultCallback(str,callback);
                 }
             }
         });
@@ -657,22 +657,24 @@ public class OkHttpClientManager {
 
         public ResultCallback()
         {
-            mType = getSuperclassTypeParameter(getClass());
+
+
+//            mType = getSuperclassTypeParameter(getClass());
         }
 
-        static Type getSuperclassTypeParameter(Class<?> subclass)
-        {
+//        static Type getSuperclassTypeParameter(Class<?> subclass)
+//        {
+//
+//            Type superclass = subclass.getGenericSuperclass();
+//            if (superclass instanceof Class)
+//            {
+//                throw new RuntimeException("Missing type parameter.");
+//            }
+//            ParameterizedType parameterized = (ParameterizedType) superclass;
+//            return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
+//        }
 
-            Type superclass = subclass.getGenericSuperclass();
-            if (superclass instanceof Class)
-            {
-                throw new RuntimeException("Missing type parameter.");
-            }
-            ParameterizedType parameterized = (ParameterizedType) superclass;
-            return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
-        }
-
-        public abstract void onError(T request, Exception e);
+        public abstract void onError(Request request, Exception e);
 
         public abstract void onResponse(T response);
     }

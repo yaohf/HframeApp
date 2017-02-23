@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-import yaohf.com.api.Api;
 import yaohf.com.api.ErrorEvent;
 import yaohf.com.api.IRequestCallback;
 import yaohf.com.api.IRequestManager;
@@ -51,13 +50,13 @@ public class AppActionImpl implements AppAction {
         params.put("username",loginName);
         params.put("password",password);
 
-        final  String url = "http://flash.weather.com.cn/wmaps/xml/china.xml";
+        final  String url = "http://apis.juhe.cn/szbusline/bus";
 
         new AsyncTask<Void, Void, Void>()
         {
             @Override
             protected Void doInBackground(Void... strs) {
-                  requestManager.post(Api.TEST_HTTP_URL, params,callback);
+                  requestManager.post(url, params,callback);
 
                 return null;
             }

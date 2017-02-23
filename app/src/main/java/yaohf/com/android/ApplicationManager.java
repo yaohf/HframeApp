@@ -2,6 +2,8 @@ package yaohf.com.android;
 
 import android.app.Application;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import yaohf.com.api.net.VolleyManager;
 import yaohf.com.core.AppAction;
 import yaohf.com.core.AppActionImpl;
@@ -19,6 +21,7 @@ public class ApplicationManager extends Application {
         super.onCreate();
         VolleyManager.getInstance(this);
         appAction = new AppActionImpl(this);
+        SQLiteDatabase.loadLibs(this);
         //注册捕获crash error
         Cockroach.install(new Cockroach.ExceptionHandler() {
             @Override
