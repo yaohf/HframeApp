@@ -9,7 +9,24 @@ public class DBOpenHelper extends ToSDCardSQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DIR = "hframe";
 
-    public DBOpenHelper(Context context) {
+    private static DBOpenHelper instance;
+
+    public static DBOpenHelper getInstance( Context context)
+    {
+        if(instance == null)
+        {
+            synchronized (DBOpenHelper.class)
+            {
+                if(instance == null)
+                {
+                    instance = new DBOpenHelper(context);
+                }
+            }
+        }
+        return instance;
+    }
+
+    private DBOpenHelper(Context context) {
 
         super(context, DIR, DBNAME, null, VERSION);
     }

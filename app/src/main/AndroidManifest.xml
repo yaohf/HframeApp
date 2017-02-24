@@ -53,6 +53,9 @@
         <activity
             android:name=".activity.LiteOrmActivity"
             />
+        <activity
+            android:name=".activity.ScreenActivity"
+            />
     </application>
 
 </manifest>

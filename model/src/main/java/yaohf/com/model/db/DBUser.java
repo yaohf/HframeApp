@@ -19,7 +19,7 @@ public class DBUser implements DBInterface<UserInfo> {
     public DBUser(Context context) {
         mContext = context;
         if (dbHelp == null) {
-            this.dbHelp = new DBOpenHelper(context);
+            this.dbHelp = DBOpenHelper.getInstance(mContext);
             SQLiteDatabase db = dbHelp.getWritableDatabase();
             while (db.isDbLockedByCurrentThread()
                     || db.isDbLockedByOtherThreads()) {

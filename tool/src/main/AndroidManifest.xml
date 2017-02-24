@@ -1,12 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="yaohf.com.tool">
-    <uses-sdk tools:overrideLibrary="yaohf.com.tool"/>
-    <application android:allowBackup="true"
-                 android:label="@string/app_name"
-                 android:supportsRtl="true"
-    >
 
+    <uses-sdk tools:overrideLibrary="yaohf.com.tool"/>
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+        <service
+            android:name=".screen.ScreenIntentService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

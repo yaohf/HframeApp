@@ -17,5 +17,6 @@
         <item>Hook click</item>
         <item>倒计时控件</item>
         <item>Lite-ROM数据库</item>
+        <item>录制屏幕</item>
     </string-array>
 </resources>

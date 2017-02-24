@@ -44,4 +44,8 @@
     <string name="lite_orm_title">LiteLab-ORM</string>
     <string name="sub_title">通过日志查看测试信息</string>
 
+    <string name="screen_title">录制屏幕</string>
+    <string name="screen_start">开始录制</string>
+    <string name="screen_end">结束录制</string>
+
 </resources>
