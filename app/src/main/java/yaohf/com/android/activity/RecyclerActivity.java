@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yaohf.com.android.R;
+import yaohf.com.android.stackFragment.KeyCallBack;
 import yaohf.com.android.stackFragment.test.FramentMainActivity;
 import yaohf.com.tool.L;
 import yaohf.com.widget.recyclerview.ItemTouchAdapter;
@@ -26,7 +28,7 @@ import yaohf.com.widget.recyclerview.RecyclerAdapter;
 import yaohf.com.widget.recyclerview.listener.RvFabOffsetHidingScrollListener;
 import yaohf.com.widget.recyclerview.listener.RvToolbarOffsetHidingScrollListener;
 
-public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.OnStartActionListener {
+public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.OnStartActionListener,KeyCallBack {
 
     List<String> mDataList;
     private RecyclerView recyclerView;
@@ -37,6 +39,9 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
 
     private ItemTouchHelper mItemTouchHelper;
     private ItemTouchAdapterWrapper wrapper;
+
+    private static final long WAITTIME = 2000;
+    private long touchTime = 0;
 
 
     @Override
@@ -155,4 +160,22 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
     public void onStartSwipe(RecyclerView.ViewHolder viewHolder) {
         mItemTouchHelper.startSwipe(viewHolder);
     }
+    @Override
+    public  boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                long currentTime = System.currentTimeMillis();
+                if ((currentTime - touchTime) >= WAITTIME) {
+                    Toast.makeText(mContext, getString(R.string.exit_prompt), Toast.LENGTH_SHORT).show();
+                    touchTime = currentTime;
+                } else {
+                     exitApp();
+                }
+                return true;
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
 }

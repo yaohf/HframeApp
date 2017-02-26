@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import yaohf.com.tool.L;
+
 /**
  * Created by viqgd on 2017/2/24.
  */
@@ -91,6 +93,7 @@ public class ScreenRecorder extends Thread {
             try {
                 prepareEncoder();
                 mMuxer = new MediaMuxer(mDstPath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+                L.v(mMuxer);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -98,7 +101,7 @@ public class ScreenRecorder extends Thread {
             mVirtualDisplay = mMediaProjection.createVirtualDisplay(TAG + "-display",
                     mWidth, mHeight, mDpi, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
                     mSurface, null, null);
-            Log.d(TAG, "created virtual display: " + mVirtualDisplay);
+            L.v(TAG, "created virtual display: " + mVirtualDisplay);
             recordVirtualDisplay();
 
         } finally {
@@ -109,12 +112,12 @@ public class ScreenRecorder extends Thread {
     private void recordVirtualDisplay() {
         while (!mQuit.get()) {
             int index = mEncoder.dequeueOutputBuffer(mBufferInfo, TIMEOUT_US);
-            Log.i(TAG, "dequeue output buffer index=" + index);
+            L.v(TAG, "dequeue output buffer index=" + index);
             if (index == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
                 resetOutputFormat();
 
             } else if (index == MediaCodec.INFO_TRY_AGAIN_LATER) {
-                Log.d(TAG, "retrieving buffers time out!");
+                L.v(TAG, "retrieving buffers time out!");
                 try {
                     // wait 10ms
                     Thread.sleep(10);
@@ -140,14 +143,14 @@ public class ScreenRecorder extends Thread {
             // The codec config data was pulled out and fed to the muxer when we got
             // the INFO_OUTPUT_FORMAT_CHANGED status.
             // Ignore it.
-            Log.d(TAG, "ignoring BUFFER_FLAG_CODEC_CONFIG");
+            L.v(TAG, "ignoring BUFFER_FLAG_CODEC_CONFIG");
             mBufferInfo.size = 0;
         }
         if (mBufferInfo.size == 0) {
-            Log.d(TAG, "info.size == 0, drop it.");
+            L.v(TAG, "info.size == 0, drop it.");
             encodedData = null;
         } else {
-            Log.d(TAG, "got buffer, info: size=" + mBufferInfo.size
+            L.v(TAG, "got buffer, info: size=" + mBufferInfo.size
                     + ", presentationTimeUs=" + mBufferInfo.presentationTimeUs
                     + ", offset=" + mBufferInfo.offset);
         }
@@ -155,7 +158,7 @@ public class ScreenRecorder extends Thread {
             encodedData.position(mBufferInfo.offset);
             encodedData.limit(mBufferInfo.offset + mBufferInfo.size);
             mMuxer.writeSampleData(mVideoTrackIndex, encodedData, mBufferInfo);
-            Log.i(TAG, "sent " + mBufferInfo.size + " bytes to muxer...");
+            L.v(TAG, "sent " + mBufferInfo.size + " bytes to muxer...");
         }
     }
 
@@ -167,11 +170,11 @@ public class ScreenRecorder extends Thread {
         }
         MediaFormat newFormat = mEncoder.getOutputFormat();
 
-        Log.i(TAG, "output format changed.\n new format: " + newFormat.toString());
+        L.v(TAG, "output format changed.\n new format: " + newFormat.toString());
         mVideoTrackIndex = mMuxer.addTrack(newFormat);
         mMuxer.start();
         mMuxerStarted = true;
-        Log.i(TAG, "started media muxer, videoIndex=" + mVideoTrackIndex);
+        L.v(TAG, "started media muxer, videoIndex=" + mVideoTrackIndex);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -184,11 +187,11 @@ public class ScreenRecorder extends Thread {
         format.setInteger(MediaFormat.KEY_FRAME_RATE, FRAME_RATE);
         format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, IFRAME_INTERVAL);
 
-        Log.d(TAG, "created video format: " + format);
+        Log.v(TAG, "created video format: " + format);
         mEncoder = MediaCodec.createEncoderByType(MIME_TYPE);
         mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
         mSurface = mEncoder.createInputSurface();
-        Log.d(TAG, "created input surface: " + mSurface);
+        Log.v(TAG, "created input surface: " + mSurface);
         mEncoder.start();
     }
 

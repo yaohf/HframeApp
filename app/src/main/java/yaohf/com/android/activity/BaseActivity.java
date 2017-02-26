@@ -144,7 +144,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public final boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(getRootFragment() == null) {
             return super.onKeyDown(keyCode, event);
         }
@@ -225,6 +225,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             mHandler.removeCallbacksAndMessages(null);
         }
         mHandler = null;
+    }
+
+    protected void exitApp() {
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 }

@@ -1,24 +1,21 @@
 package yaohf.com.android.activity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
-import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Message;
 import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import java.io.File;
-
+import yaohf.com.android.ApplicationManager;
 import yaohf.com.android.R;
+import yaohf.com.android.service.ScreenService;
 import yaohf.com.tool.L;
-import yaohf.com.tool.screen.ScreenRecorder;
 
 /**
  * Created by viqgd on 2017/2/24.
@@ -28,9 +25,12 @@ public class ScreenActivity extends BaseActivity {
 
     private static final int REQUEST_CODE = 1;
     private MediaProjectionManager mMediaProjectionManager;
-    private ScreenRecorder mRecorder;
+//    private ScreenRecorder mRecorder;
 
     private Button  btnScreen;
+
+    private Intent mIntent = null;
+    private int result;
 
     int width = 1280;
     int height = 720;
@@ -45,11 +45,32 @@ public class ScreenActivity extends BaseActivity {
             L.v("Bundle >>" + savedInstanceState);
         btnScreen = findById(R.id.btn_screen);
         btnScreen.setOnClickListener(onClickListener);
-        mMediaProjectionManager = (MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE);
+        mMediaProjectionManager = (MediaProjectionManager)getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         width = dm.widthPixels;
         height = dm.heightPixels;
+    }
+
+    private void startIntent()
+    {
+        if(mIntent != null && result != 0 )
+        {
+            L.v("-------two -------");
+            ((ApplicationManager)getApplication()).setResult(result);
+            ((ApplicationManager)getApplication()).setIntent(mIntent);
+//            ((ApplicationManager)getApplication()).setmRecorder(mRecorder);
+            ((ApplicationManager)getApplication()).setmMediaProjectionManager(mMediaProjectionManager);
+            Intent intent = new Intent(mContext, ScreenService.class);
+            startService(intent);
+        }else
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                L.v("------init-------");
+                startActivityForResult(mMediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
+                ((ApplicationManager)getApplication()).setmMediaProjectionManager(mMediaProjectionManager);
+            }
+        }
     }
 
 
@@ -58,6 +79,7 @@ public class ScreenActivity extends BaseActivity {
         super.onSaveInstanceState(outState, outPersistentState);
         L.v("start");
     }
+
 
     @Override
     public void onLowMemory() {
@@ -100,21 +122,35 @@ public class ScreenActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         L.v("start");
-        MediaProjection mediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
-        if (mediaProjection == null) {
-            L.v("media projection is null");
-            return;
-        }
-        // video size
+        if( resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE:
+                    L.v("REQUEST_CODE");
+                    result = resultCode;
+                    mIntent = data;
+                    ((ApplicationManager)getApplication()).setResult(result);
+                    ((ApplicationManager)getApplication()).setIntent(mIntent);
+                    Intent intent = new Intent(mContext, ScreenService.class);
+                    startService(intent);
 
-        File file = new File(Environment.getExternalStorageDirectory(),
-                "record-" + width + "x" + height + "-" + System.currentTimeMillis() + ".mp4");
-        final int bitrate = 6000000;
-        mRecorder = new ScreenRecorder(width, height, bitrate, 1, mediaProjection, file.getAbsolutePath());
-        mRecorder.start();
-        btnScreen.setText(R.string.screen_end);
-        Toast.makeText(this, "Screen recorder is running...", Toast.LENGTH_SHORT).show();
-        moveTaskToBack(true);
+
+//                    MediaProjection mediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
+//                    if (mediaProjection == null) {
+//                        L.v("media projection is null");
+//                        return;
+//                    }
+//                    // video size
+//                    File file = new File(Environment.getExternalStorageDirectory(),
+//                            "record_" + width + "x" + height + "_" + System.currentTimeMillis() + ".mp4");
+//                    final int bitrate = 6000000;
+//                    mRecorder = new ScreenRecorder(width, height, bitrate, 1, mediaProjection, file.getAbsolutePath());
+//                    mRecorder.start();
+//                    btnScreen.setText(R.string.screen_end);
+//                    Toast.makeText(this, "Screen recorder is running...", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+//        moveTaskToBack(true);
         L.v("end");
     }
 
@@ -126,14 +162,15 @@ public class ScreenActivity extends BaseActivity {
             switch (view.getId())
             {
                 case R.id.btn_screen:
-                    if (mRecorder != null) {
-                        mRecorder.quit();
-                        mRecorder = null;
-                        ((Button)view).setText(R.string.screen_start);
-                    } else {
-                        Intent captureIntent = mMediaProjectionManager.createScreenCaptureIntent();
-                        startActivityForResult(captureIntent, REQUEST_CODE);
-                    }
+                    startIntent();
+//                    if (mRecorder != null) {
+//                        mRecorder.quit();
+//                        mRecorder = null;
+//                        ((Button)view).setText(R.string.screen_start);
+//                    } else {
+//                        Intent captureIntent = mMediaProjectionManager.createScreenCaptureIntent();
+//                        startActivityForResult(captureIntent, REQUEST_CODE);
+//                    }
                     break;
             }
         }
@@ -144,11 +181,11 @@ public class ScreenActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         L.v("start");
-        if(mRecorder != null){
-            mRecorder.quit();
-            mRecorder = null;
-            L.v("end");
-        }
+//        if(mRecorder != null){
+//            mRecorder.quit();
+//            mRecorder = null;
+//            L.v("end");
+//        }
     }
 
     @Override
