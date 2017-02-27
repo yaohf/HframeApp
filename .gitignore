@@ -3,6 +3,7 @@
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
+/.idea
 /build
 /captures
 # built application files
@@ -25,3 +26,8 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+.log
+.externalNativeBuild
+keyid
+*.iml
