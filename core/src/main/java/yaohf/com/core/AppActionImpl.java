@@ -25,7 +25,7 @@ public class AppActionImpl implements AppAction {
     private IRequestManager requestManager;
 
     public AppActionImpl(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
         requestManager = RequestFactory.getIRequestManager();
     }
 

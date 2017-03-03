@@ -184,7 +184,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    public  class MyHandler extends Handler {
+    public class MyHandler extends Handler {
 
         private final WeakReference<Activity> mReference;
         public MyHandler(Activity mActivity) {

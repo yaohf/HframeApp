@@ -17,7 +17,7 @@ public class DBUser implements DBInterface<UserInfo> {
     private DBOpenHelper dbHelp;
 
     public DBUser(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         if (dbHelp == null) {
             this.dbHelp = DBOpenHelper.getInstance(mContext);
             SQLiteDatabase db = dbHelp.getWritableDatabase();

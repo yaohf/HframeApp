@@ -1,6 +1,7 @@
 package yaohf.com.android;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.media.projection.MediaProjectionManager;
 
@@ -16,6 +17,16 @@ import yaohf.com.tool.screen.ScreenRecorder;
  * Application类，应用级别的操作都放这里
  */
 public class ApplicationManager extends Application {
+
+    private static ApplicationManager application;
+
+    public static ApplicationManager getInstance() {
+        return application;
+    }
+
+    public static Context getContext() {
+        return application.getApplicationContext();
+    }
 
     private int result;
 
@@ -62,6 +73,7 @@ public class ApplicationManager extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        application = this;
         VolleyManager.getInstance(this);
         appAction = new AppActionImpl(this);
         SQLiteDatabase.loadLibs(this);
@@ -73,6 +85,7 @@ public class ApplicationManager extends Application {
             }
         });
     }
+
     public AppAction getAppAction() {
         return appAction;
     }
