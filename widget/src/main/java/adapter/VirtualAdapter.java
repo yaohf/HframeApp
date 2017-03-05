@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
-import yaohf.com.widget.recyclerview.ViewHolder;
+import yaohf.com.widget.ViewHolder;
 
 
 /**

@@ -25,7 +25,7 @@ import java.util.Map.Entry;
  * @author LiHong
  * @since 2013-9-30
  */
-public class WebViewSecurity extends WebView {
+public class SecurityWebView extends WebView {
     
     private static final boolean DEBUG = true;
     private static final String VAR_ARG_PREFIX = "arg";
@@ -46,17 +46,17 @@ public class WebViewSecurity extends WebView {
     private HashMap<String, Object> mJsInterfaceMap = new HashMap<String, Object>();
     private String mJsStringCache = null;
     
-    public WebViewSecurity(Context context, AttributeSet attrs, int defStyle) {
+    public SecurityWebView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
 
-    public WebViewSecurity(Context context, AttributeSet attrs) {
+    public SecurityWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public WebViewSecurity(Context context) {
+    public SecurityWebView(Context context) {
         super(context);
         init(context);
     }
@@ -117,7 +117,7 @@ public class WebViewSecurity extends WebView {
     }
     
     private void injectJavascriptInterfaces(WebView webView) {
-        if (webView instanceof WebViewSecurity) {
+        if (webView instanceof SecurityWebView) {
             injectJavascriptInterfaces();
         }
     }
@@ -365,7 +365,7 @@ public class WebViewSecurity extends WebView {
         @Override
         public final boolean onJsPrompt(WebView view, String url, String message,
                 String defaultValue, JsPromptResult result) { 
-            if (view instanceof WebViewSecurity) {
+            if (view instanceof SecurityWebView) {
                 if (handleJsInterface(view, url, message, defaultValue, result)) {
                     return true;
                 }

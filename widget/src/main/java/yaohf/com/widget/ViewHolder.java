@@ -1,4 +1,4 @@
-package yaohf.com.widget.recyclerview;
+package yaohf.com.widget;
 
 import android.content.Context;
 import android.util.SparseArray;
