@@ -1,8 +1,11 @@
 package yaohf.com.android.activity;
 
 import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +45,9 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         // 初始化View
         initViews();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(TransitionInflater.from(mContext).inflateTransition(R.transition.change_bounds));
+        }
 
     }
 
@@ -77,6 +83,7 @@ public class LoginActivity extends BaseActivity {
 
     // 准备登录
     public void toLogin(View view) {
+        showProgress();
         String loginName = phoneEdit.getText().toString();
         String password = passwordEdit.getText().toString();
 
@@ -90,20 +97,27 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(Object data) {
                 L.v("data>>" + data);
-                startActivity(RecyclerActivity.class, null);
-                finish();
+                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this,null);
+                startActivity(RecyclerActivity.class, activityOptionsCompat.toBundle());
                 L.v("end");
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
+                dismissProgress();
                 L.v("start");
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                startActivity(RecyclerActivity.class, null);
-                finish();
+                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this,null);
+                startActivity(RecyclerActivity.class, activityOptionsCompat.toBundle());
                 L.v("end");
             }
         });
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }

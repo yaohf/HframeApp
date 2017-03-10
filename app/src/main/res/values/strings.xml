@@ -47,5 +47,6 @@
     <string name="screen_title">录制屏幕</string>
 
     <string name="exit_prompt">再按一次退出</string>
+    <string name="title_activity_cv_camera_main">CvCameraMainActivity</string>
 
 </resources>

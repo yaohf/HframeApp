@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import yaohf.com.widget.recyclerview.ItemTouchAdapter;
 import yaohf.com.widget.recyclerview.ItemTouchAdapterWrapper;
 import yaohf.com.widget.recyclerview.ItemTouchHelperCallback;
 import yaohf.com.widget.recyclerview.RecyclerAdapter;
+import yaohf.com.widget.recyclerview.Utils;
 import yaohf.com.widget.recyclerview.listener.RvFabOffsetHidingScrollListener;
 import yaohf.com.widget.recyclerview.listener.RvToolbarOffsetHidingScrollListener;
 
@@ -42,6 +44,11 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
 
     private static final long WAITTIME = 2000;
     private long touchTime = 0;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private int mToolbarHeight;
+
 
 
     @Override
@@ -69,19 +76,39 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
     }
 
     private void init() {
+
+        mToolbarHeight = Utils.getToolbarHeight(this);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = findById(R.id.recyclerView);
 
-
+        swipeRefreshLayout = findById(R.id.swipe_container);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        swipeRefreshLayout.setProgressViewEndTarget(true,300);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+//                        data.clear();
+//                        getData();
+                    }
+                }, 2000);
+            }
+        });
         //设置item动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new ItemTouchAdapter(this, mDataList);
         wrapper = new ItemTouchAdapterWrapper((ItemTouchAdapter) mAdapter);
         wrapper.addFooter(R.layout.footer_load_more);
-//        wrapper.addHeader(R.layout.header);
+        wrapper.addHeader(R.layout.header);
         //添加item点击事件监听
         mAdapter.setOnItemClickListener(itemClickListener);
         mAdapter.setOnItemLongClickListener(new RecyclerAdapter.OnItemLongClickListener() {
@@ -96,8 +123,10 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
 
         recyclerView.setLayoutManager(gridLayout);
         recyclerView.setAdapter(wrapper);
-        recyclerView.addOnScrollListener(new RvToolbarOffsetHidingScrollListener(this, mToolbar));
+        recyclerView.addOnScrollListener(new RvToolbarOffsetHidingScrollListener(this,mToolbar));
         recyclerView.addOnScrollListener(new RvFabOffsetHidingScrollListener(this, fab));
+
+
 
         mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(wrapper));
         mItemTouchHelper.attachToRecyclerView(recyclerView);
@@ -109,7 +138,6 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
                         .setAction("Action", null).show();
             }
         });
-
     }
 
     //Fragment Stack test

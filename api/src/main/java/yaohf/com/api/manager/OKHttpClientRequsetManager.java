@@ -61,6 +61,7 @@ public class OKHttpClientRequsetManager  implements IRequestManager{
 
     @Override
     public void get(String url, Map params, final IRequestCallback callback) {
+
         String data = url + "?" + HttpUtils.getJoinParams(params);
         OkHttpClientManager.getAsyn(data, new OkHttpClientManager.ResultCallback() {
             @Override

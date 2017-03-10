@@ -8,10 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import yaohf.com.tool.L;
 import yaohf.com.widget.recyclerview.Utils;
 
 
-public class RvToolbarOffsetHidingScrollListener extends RecyclerView.OnScrollListener {
+public  class RvToolbarOffsetHidingScrollListener extends RecyclerView.OnScrollListener {
 
     private final Toolbar mToolbar;
     private int mToolbarOffset = 0;
@@ -37,6 +38,7 @@ public class RvToolbarOffsetHidingScrollListener extends RecyclerView.OnScrollLi
             mToolbarOffset += dy;
         }
         mScrollDistance += dy;
+        L.v("onScrolled mScrollDistance>>" + mScrollDistance);
     }
 
     private boolean isReachTop(RecyclerView recyclerView, int newState) {
@@ -83,6 +85,7 @@ public class RvToolbarOffsetHidingScrollListener extends RecyclerView.OnScrollLi
         super.onScrollStateChanged(recyclerView, newState);
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
             //防止因toolbar隐藏而在顶部漏出一大片空白
+            L.v("onScrollStateChanged mScrollDistance>>" + mScrollDistance + "mToolbarHeight " + mToolbarHeight);
             if (mScrollDistance > mToolbarHeight) {
                 //根据mToolbarOffset判断是前进或回滚
                 if (mControlsVisible) {

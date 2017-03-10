@@ -28,6 +28,7 @@ import yaohf.com.android.stackFragment.RootFragment;
 import yaohf.com.android.stackFragment.StackManager;
 import yaohf.com.core.AppAction;
 import yaohf.com.tool.permission.FramePermission;
+import yaohf.com.widget.dialog.BaseProgressDialog;
 
 
 /**
@@ -46,6 +47,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     //接键处理
     public KeyCallBack callBack;
 
+    public BaseProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,62 @@ public abstract class BaseActivity extends AppCompatActivity {
             initFragment(savedInstanceState);
             clearFragmentManagerInsideFragments(this);
         }
+        initProgress();
+    }
+
+    private void initProgress()
+    {
+        if(mProgress != null)
+            mProgress = null;
+        mProgress = new BaseProgressDialog(this, R.style.CustomDialog,
+                getString(R.string.loading));
+        mProgress.setCancelable(true);
+        mProgress.setCanceledOnTouchOutside(false);
+    }
+
+    /**
+     * 显示圈圈
+     */
+    public void showProgress() {
+        if (mProgress != null && !mProgress.isShowing()) {
+            mProgress.showProgress();
+        }
+    }
+
+    /**
+     *
+     * @Description: 设置等待文本内容 String
+     * @param @param msg
+     * @return void
+     * @throws
+     */
+    public void setMessage(String msg) {
+        mProgress.setMessage(msg);
+    }
+
+    /**
+     * 不显示圈圈
+     */
+    public void dismissProgress() {
+        if(mContext == null)
+            return;
+        if(isFinishing())
+            return;
+        if (mProgress != null && mProgress.isShowing()) {
+            mProgress.dismissProgress();
+        }
+    }
+
+    /**
+     *
+     * @Description: 设置等待文本内容 int 类型
+     * @param @param id
+     * @return void
+     * @throws
+     */
+    public void setMessage(int id) {
+        // mProgress.setMessage(getString(id));
+        mProgress.setMessage(getString(id));
     }
 
     /**
@@ -208,9 +267,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         Intent mIntent = new Intent(mContext,activity);
         if(bundle != null)
         {
-            mIntent.putExtras(bundle);
+//            mIntent.putExtras(bundle);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                startActivity(mIntent,bundle);
+            }
+        }else {
+            startActivity(mIntent);
         }
-        startActivity(mIntent);
     }
 
 

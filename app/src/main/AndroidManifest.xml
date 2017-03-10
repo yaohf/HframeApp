@@ -42,22 +42,14 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".stackFragment.test.FramentMainActivity"/>
-        <activity
-            android:name=".activity.TEventActivity"
-            />
-        <activity
-            android:name=".activity.HookActivity"
-            />
-        <activity
-            android:name=".activity.CountDownActivity"
-            />
-        <activity
-            android:name=".activity.LiteOrmActivity"
-            />
+        <activity android:name=".activity.TEventActivity"/>
+        <activity android:name=".activity.HookActivity"/>
+        <activity android:name=".activity.CountDownActivity"/>
+        <activity android:name=".activity.LiteOrmActivity"/>
         <activity
             android:name=".activity.ScreenActivity"
-            android:launchMode="singleInstance"
-            />
+            android:launchMode="singleInstance"/>
+
         <service android:name=".service.ScreenService"/>
     </application>
 
