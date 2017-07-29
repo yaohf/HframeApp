@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,6 +18,46 @@ import java.io.InputStreamReader;
  */
 
 public class FileUtils {
+
+    private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
+
+    public static final String NAME = "Video";
+
+    public static final String NAME_TEST = "VideoTest";
+
+
+    public static String getAppPath(String name) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(SD_PATH);
+        sb.append(File.separator);
+        sb.append(name);
+        sb.append(File.separator);
+        return sb.toString();
+    }
+
+    public static String getPath() {
+        return getAppPath(NAME);
+    }
+
+    public static String getTestPath() {
+        return getAppPath(NAME_TEST);
+    }
+
+    public static void deleteFiles(File root) {
+        File files[] = root.listFiles();
+        if (files != null) {
+            for (File f : files) {
+                if (!f.isDirectory() && f.exists()) { // 判断是否存在
+                    try {
+                        f.delete();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * 获取Asset下文本内容
      * @param context

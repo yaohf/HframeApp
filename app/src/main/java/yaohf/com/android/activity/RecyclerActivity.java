@@ -47,7 +47,7 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
 
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private int mToolbarHeight;
+    private int mToolbarHeight = 0;
 
 
 
@@ -166,6 +166,9 @@ public class RecyclerActivity extends BaseActivity implements ItemTouchAdapter.O
             }else if(value.equals(initItem[6]))
             {
                 startActivity(ScreenActivity.class, null);
+            }else if(value.equals(initItem[7]))
+            {
+                startActivity(DownloadActivity.class,null);
             }
             else
             {

@@ -28,9 +28,6 @@ public class AppActionImpl implements AppAction {
         this.context = context.getApplicationContext();
         requestManager = RequestFactory.getIRequestManager();
     }
-
-
-
     @Override
     public void login(final String loginName, final String password, final IRequestCallback callback) {
         // 参数检查
@@ -76,5 +73,10 @@ public class AppActionImpl implements AppAction {
                 return null;
             }
         }.execute();
+    }
+
+    public void observer(String url,HashMap map,final IRequestCallback callback)
+    {
+
     }
 }

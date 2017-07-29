@@ -1,0 +1,6 @@
+<root>
+  <item
+      name='io.reactivex.Observable io.reactivex.Observable&lt;R&gt; flatMap(io.reactivex.functions.Function&lt;? super T,? extends io.reactivex.ObservableSource&lt;? extends R&gt;&gt;)'>
+    <annotation name='java.lang.annotation.Deprecated'/>
+  </item>
+</root>

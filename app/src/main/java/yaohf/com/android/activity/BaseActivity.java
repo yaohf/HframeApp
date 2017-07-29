@@ -26,7 +26,9 @@ import yaohf.com.android.R;
 import yaohf.com.android.stackFragment.KeyCallBack;
 import yaohf.com.android.stackFragment.RootFragment;
 import yaohf.com.android.stackFragment.StackManager;
+import yaohf.com.android.stackFragment.test.Fragment1;
 import yaohf.com.core.AppAction;
+import yaohf.com.tool.L;
 import yaohf.com.tool.permission.FramePermission;
 import yaohf.com.widget.dialog.BaseProgressDialog;
 
@@ -209,7 +211,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK:
-                    manager.onBackPressed();
+//                    manager.onBackPressed();
+                    manager.closeAllFragment();
                     return true;
                 default:
                     if (callBack != null) {

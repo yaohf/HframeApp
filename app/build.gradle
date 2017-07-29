@@ -1,37 +1,92 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+
+    dexOptions {
+        incremental = true
+        preDexLibraries = false
+        jumboMode = false
+        maxProcessCount 2
+        threadCount 6
+        javaMaxHeapSize '2g'
+    }
+    compileSdkVersion 24
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "yaohf.com.android"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName
+        jackOptions.enabled = true
+//        jackOptions {
+////            additionalParameters("jack.incremental": true)
+//            enabled true
+////            jackInProcess false
+//        }
+
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
+            //这两个属性可以帮助移除那些在程序中使用不到的代码与资源，帮助减少APP的安装包大小。
+//            shrinkResources true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/menu'] } }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    productFlavors {
+        // When building a variant that uses this flavor, the following configurations
+        // override those in the defaultConfig block.
+        dev {
+            // To avoid using legacy multidex, set minSdkVersion to 21 or higher.
+            minSdkVersion 15
+//            versionNameSuffix "-dev"
+//            applicationIdSuffix '.dev'
+//            resConfigs "en", "xxhdpi"
+        }
+
+        prod {
+            // If you've configured the defaultConfig block for the release version of
+            // your app, you can leave this block empty and Gradle uses configurations in
+            // the defaultConfig block instead. You still need to create this flavor.
+            // Otherwise, all variants use the "dev" flavor configurations.
+        }
+    }
+
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //    compile 'com.android.support:appcompat-v7:23.2.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.1.1'
+//    compile 'com.android.support:appcompat-v7:23.4.0'
+//    compile 'com.android.support:design:23.2.0'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    compile project(':api')
     compile project(':model')
     compile project(':core')
     compile project(':widget')
     compile project(':tool')
-    compile 'com.google.android.gms:play-services:9.6.1'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-
-
 //    compile 'com.github.yaohf:HframeApp:0.1'
 }

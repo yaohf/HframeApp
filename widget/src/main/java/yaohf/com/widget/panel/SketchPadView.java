@@ -128,7 +128,8 @@ public class SketchPadView extends View implements IUndoCommand {
 		try {
 			m_bkBitmap = BitmapFactory.decodeStream(context.getAssets().open(
 					"paper.png"));
-		} catch (IOException e) {
+//			m_bkBitmap = Bitmap.createBitmap(windowWidth,windowHeight, Bitmap.Config.RGB_565);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 //		m_bkBitmap = bitmap;

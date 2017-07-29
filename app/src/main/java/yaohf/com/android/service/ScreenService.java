@@ -19,7 +19,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -225,12 +224,12 @@ public class ScreenService extends Service {
      */
     public void initScreenRecorder()
     {
-        if (mMediaProjection != null) {
-            virtualDisplay();
-        } else {
+//        if (mMediaProjection != null) {
+//            virtualDisplay();
+//        } else {
             setUpMediaProjection();
             screenRecorder();
-        }
+//        }
     }
 
     /**
@@ -290,14 +289,14 @@ public class ScreenService extends Service {
         bitmap.copyPixelsFromBuffer(buffer);
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
         image.close();
-        Log.i(TAG, "image data captured");
+        L.v("image data captured");
 
         if (bitmap != null) {
             try {
                 File fileImage = new File(nameImage);
                 if (!fileImage.exists()) {
                     fileImage.createNewFile();
-                    Log.i(TAG, "image file created");
+                    L.v("image file created");
                 }
                 FileOutputStream out = new FileOutputStream(fileImage);
                 if (out != null) {
@@ -308,7 +307,7 @@ public class ScreenService extends Service {
                     Uri contentUri = Uri.fromFile(fileImage);
                     media.setData(contentUri);
                     this.sendBroadcast(media);
-                    Log.i(TAG, "screen image saved");
+                    L.v("screen image saved");
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -324,7 +323,7 @@ public class ScreenService extends Service {
             mMediaProjection.stop();
             mMediaProjection = null;
         }
-        Log.i(TAG, "mMediaProjection undefined");
+        L.v("mMediaProjection undefined");
     }
 
     private void stopVirtual() {
@@ -335,7 +334,7 @@ public class ScreenService extends Service {
             mVirtualDisplay.release();
         }
         mVirtualDisplay = null;
-        Log.i(TAG, "virtual display stopped");
+        L.v("virtual display stopped");
     }
 
     @Override
@@ -346,6 +345,6 @@ public class ScreenService extends Service {
             mWindowManager.removeView(mFloatLayout);
         }
         tearDownMediaProjection();
-        Log.i(TAG, "application destroy");
+        L.v("application destroy");
     }
 }

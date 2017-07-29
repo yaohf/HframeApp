@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,11 +40,11 @@ import yaohf.com.widget.panel.view.ShapeSelectView;
 
 
 /**
- *  涂鸭板
+ * 涂鸭板
  */
 
 public class PanelActivity extends BaseActivity implements
-        View.OnClickListener, ISketchListener,ISketchAbstractListener {
+        View.OnClickListener, ISketchListener, ISketchAbstractListener {
 
     public static final int MSG_SET_BTIMAP = 0;
     // 拍照
@@ -92,20 +91,25 @@ public class PanelActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.test_book);
+        this.mContext = this;
+//        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+//            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
+//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+//        }
         initView();
     }
 
 
-
     private void initView() {
         mSketchpad = findById(R.id.sketchpad);
-        Bitmap bitmap = null;
-        try {
-            bitmap = BitmapFactory.decodeStream(mContext.getAssets().open("paper.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mSketchpad.setBkBitmap(bitmap);
+        L.v("getAssets()>>" + getAssets());
+//        Bitmap bitmap = null;
+//        try {
+//            bitmap = BitmapFactory.decodeStream(getAssets().open("paper.png", AssetManager.ACCESS_BUFFER));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        mSketchpad.setBkBitmap(bitmap);
 
         findViewById(R.id.del_btn).setOnClickListener(this);
         findViewById(R.id.pen_go_btn).setOnClickListener(this);
@@ -148,26 +152,24 @@ public class PanelActivity extends BaseActivity implements
     public PanelView getPanelView(int id) {
         if (id == R.id.color_btn) {
             panel = new ColorSelectView(mContext);
-        }else if( id == R.id.paint_btn) {
+        } else if (id == R.id.paint_btn) {
             panel = new PaintSelectView(mContext);
-        }
-         else if(id == R.id.shape_btn) {
+        } else if (id == R.id.shape_btn) {
             panel = new ShapeSelectView(mContext);
-        }
-         else if(id == R.id.peraser_btn) {
+        } else if (id == R.id.peraser_btn) {
             panel = new EraserSelectView(mContext);
-        }
-         else if(id == R.id.pic_btn) {
+        } else if (id == R.id.pic_btn) {
             panel = new PicSelectView(mContext);
-        }else if( id == R.id.del_btn) {
+        } else if (id == R.id.del_btn) {
             panel = new DelSelectView(mContext);
         }
-        if (panel != null){
+        if (panel != null) {
             panel.setSelectListener(this);
             panel.setSelectAbstractListener(this);
         }
         return panel;
     }
+
     public void showPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setView(panel);
@@ -192,21 +194,17 @@ public class PanelActivity extends BaseActivity implements
     }
 
     private void selectedIndex(int id) {
-            if( id == R.id.pic_btn) {
-                pic_btn.setImageResource(R.drawable.pic_icon_2x);
-            }
-            else if (id == R.id.paint_btn) {
-                paint_btn.setImageResource(R.drawable.pen_icon_2x);
-            }
-            else if (id == R.id.color_btn) {
-                color_btn.setImageResource(R.drawable.colour5_icon);
-            }
-            else if (id == R.id.shape_btn) {
-                shape_btn.setImageResource(R.drawable.xz_icon_xz);
-            }
-            else if (id == R.id.peraser_btn) {
-                peraser_btn.setImageResource(R.drawable.xp_icon_xz);
-            }
+        if (id == R.id.pic_btn) {
+            pic_btn.setImageResource(R.drawable.pic_icon_2x);
+        } else if (id == R.id.paint_btn) {
+            paint_btn.setImageResource(R.drawable.pen_icon_2x);
+        } else if (id == R.id.color_btn) {
+            color_btn.setImageResource(R.drawable.colour5_icon);
+        } else if (id == R.id.shape_btn) {
+            shape_btn.setImageResource(R.drawable.xz_icon_xz);
+        } else if (id == R.id.peraser_btn) {
+            peraser_btn.setImageResource(R.drawable.xp_icon_xz);
+        }
     }
 
     Dialog dialog;
@@ -260,12 +258,12 @@ public class PanelActivity extends BaseActivity implements
             //保存
             case R.id.save_panel_btn:
 
-                if(dialog != null && dialog.isShowing()){
+                if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                     dialog = null;
                 }
 
-                dialog=new Dialog(mContext, R.style.my_dialog);
+                dialog = new Dialog(mContext, R.style.my_dialog);
                 dialog.setContentView(R.layout.dialog_save_hint);
                 ((TextView) dialog.findViewById(R.id.dialog_vote_save_tv)).setText(R.string.hint_str);
                 ((TextView) dialog.findViewById(R.id.msg_tv)).setText(R.string.is_save_panel_str);
@@ -286,7 +284,7 @@ public class PanelActivity extends BaseActivity implements
 
                     @Override
                     public void onClick(View v) {
-                        BitmapUtil.saveBitmap(BITMAP_CACHE_SAVE_PATH,"panel_save.png",mSketchpad.getCanvasSnapshot());
+                        BitmapUtil.saveBitmap(BITMAP_CACHE_SAVE_PATH, "panel_save.png", mSketchpad.getCanvasSnapshot());
                         dialog.dismiss();
                     }
                 });
@@ -325,7 +323,7 @@ public class PanelActivity extends BaseActivity implements
         L.v("color>>" + color);
         currentColor = color;
         eraser = 0;
-		mSketchpad.setStrokeColor(currentColor);
+        mSketchpad.setStrokeColor(currentColor);
     }
 
     @Override
@@ -341,7 +339,7 @@ public class PanelActivity extends BaseActivity implements
         L.v("paint size>>" + size);
         paintSize = size;
         eraser = 0;
-		mSketchpad.setStrokeSize(paintSize, SketchPadView.STROKE_PEN);
+        mSketchpad.setStrokeSize(paintSize, SketchPadView.STROKE_PEN);
 
     }
 
@@ -352,7 +350,7 @@ public class PanelActivity extends BaseActivity implements
     public void setShapeType(int type) {
         shapeType = type;
         eraser = 0;
-		mSketchpad.setStrokeType(shapeType);
+        mSketchpad.setStrokeType(shapeType);
     }
 
 
@@ -364,6 +362,7 @@ public class PanelActivity extends BaseActivity implements
     private static final String BITMAP_CACHE_SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
 
     final String SAVE_PATH = "panel_cache.png";
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -373,9 +372,9 @@ public class PanelActivity extends BaseActivity implements
         File file = null;
         Bitmap camorabitmap = null;
         switch (requestCode) {
-		//拍照
+            //拍照
             case TAKE_PICTURE_RESULT:
-			// 检测内存卡是否以满，内存卡的时候，不进行拍照保存
+                // 检测内存卡是否以满，内存卡的时候，不进行拍照保存
                 if (WidGetUtils.getAvailaleSize() < 1) {
                     Toast.makeText(mContext, R.string.sd_full, Toast.LENGTH_SHORT)
                             .show();
@@ -476,8 +475,7 @@ public class PanelActivity extends BaseActivity implements
 
     @Override
     public void setAbsDeleteAll(int type) {
-        switch(type)
-        {
+        switch (type) {
             case 1:
                 mSketchpad.clearAllStrokes();
                 mSketchpad.clearCanvas();
@@ -487,6 +485,7 @@ public class PanelActivity extends BaseActivity implements
                 break;
         }
     }
+
     @Override
     protected void activityHanlderMessage(Message m) {
 

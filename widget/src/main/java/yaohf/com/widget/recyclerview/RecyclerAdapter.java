@@ -19,7 +19,7 @@ import yaohf.com.tool.L;
 public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> {
 
     protected final List<T> mItems;
-    protected final Context mContext;
+    public final Context mContext;
 
     protected LayoutInflater mInflater;
     protected OnItemClickListener mClickListener;

@@ -1,32 +1,66 @@
+
 apply plugin: 'com.android.library'
 
-android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xbootclasspath/a:" + System.properties.get("java.home") + "/lib/rt.jar"
     }
 }
 
+android {
+    compileSdkVersion 24
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+//    testBuildType "no_proguard"
+//    buildTypes {
+//        debug {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            debuggable true
+//        }
+//        release {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//        no_proguard {
+//            minifyEnabled false
+//            debuggable true
+//        }
+//    }
+
+
+
+
+//    packagingOptions {
+//        exclude 'META-INF/rxjava.properties'
+//    }
+}
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    //    compile 'com.android.support:appcompat-v7:23.2.1'
-    //    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.mcxiaoke.volley:library:1.0.19'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.squareup.okio:okio:1.5.0'
     compile project(':model')
     compile project(':tool')
-//    compile 'com.google.android.gms:play-services-basement:9.6.1'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    //    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    //    compile 'com.squareup.okio:okio:1.5.0'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
+    //RxJava和RxAndroid 用来做线程切换的
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    //    compile('com.jakewharton.rxbinding:rxbinding:0.3.0') {
+    //        exclude module: 'support-annotations'
+    //    }
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    //    compile 'com.google.android.gms:play-services-basement:9.6.1'
 }

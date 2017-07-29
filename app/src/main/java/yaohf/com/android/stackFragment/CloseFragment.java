@@ -9,5 +9,5 @@ package yaohf.com.android.stackFragment;
 public interface CloseFragment {
     void close(RootFragment fragment);
 
-    void show(RootFragment fragment);
+//    void show(RootFragment fragment);
 }

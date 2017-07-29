@@ -1,11 +1,8 @@
 package yaohf.com.android.activity;
 
 import android.Manifest;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,9 +42,9 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         // 初始化View
         initViews();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setExitTransition(TransitionInflater.from(mContext).inflateTransition(R.transition.change_bounds));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            getWindow().setExitTransition(TransitionInflater.from(mContext).inflateTransition(R.transition.change_bounds));
+//        }
 
     }
 
@@ -97,8 +94,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(Object data) {
                 L.v("data>>" + data);
-                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this,null);
-                startActivity(RecyclerActivity.class, activityOptionsCompat.toBundle());
+//                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this,null);
+                startActivity(RecyclerActivity.class,null);
                 L.v("end");
             }
 
@@ -107,8 +104,9 @@ public class LoginActivity extends BaseActivity {
                 dismissProgress();
                 L.v("start");
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this,null);
-                startActivity(RecyclerActivity.class, activityOptionsCompat.toBundle());
+//                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this,null);
+//                startActivity(RecyclerActivity.class, activityOptionsCompat.toBundle());
+                startActivity(RecyclerActivity.class, null);
                 L.v("end");
             }
         });

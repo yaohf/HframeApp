@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 4
         versionCode 1
         versionName "1.0"
     }
@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(include: ['*.jar'], dir: '../libs')
     //    compile 'com.android.support:appcompat-v7:22.0.0'
     compile project(':tool')
     compile files('libs/lite-orm-1.9.1.jar')

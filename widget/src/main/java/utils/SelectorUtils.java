@@ -18,7 +18,7 @@ public class SelectorUtils {
     }
 
     private SelectorUtils(Context c) {
-        this.mContext = c;
+        this.mContext = c.getApplicationContext();
     }
 
     /**

@@ -25,6 +25,7 @@ public class HomeFragment extends RootFragment implements View.OnClickListener {
         inflate.findViewById(R.id.single_top).setOnClickListener(this);
         inflate.findViewById(R.id.single_task).setOnClickListener(this);
         inflate.findViewById(R.id.single_instance).setOnClickListener(this);
+        inflate.findViewById(R.id.btn_home).setOnClickListener(this);
         return inflate;
     }
 
@@ -48,6 +49,9 @@ public class HomeFragment extends RootFragment implements View.OnClickListener {
                 break;
             case R.id.single_instance:
                 open(new Fragment1(), null, StackManager.SINGLE_INSTANCE);
+                break;
+            case R.id.btn_home:
+
                 break;
         }
     }

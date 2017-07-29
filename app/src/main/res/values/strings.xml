@@ -18,17 +18,11 @@
 
     <!-- 页面标题 -->
     <string name="title_activity_login">登录</string>
-    <string name="title_activity_register">注册</string>
-    <string name="title_activity_coupon_list">最新券</string>
 
-    <!-- ActionBar -->
-    <string name="action_register">注册</string>
 
     <!-- 按钮文字 -->
     <string name="btn_login">登录</string>
     <string name="btn_register">注册</string>
-    <string name="btn_goto_register">注册</string>
-    <string name="btn_send_code">发送验证码</string>
 
     <!-- EditText hint -->
     <string name="hint_phone">手机号码</string>
@@ -47,6 +41,6 @@
     <string name="screen_title">录制屏幕</string>
 
     <string name="exit_prompt">再按一次退出</string>
-    <string name="title_activity_cv_camera_main">CvCameraMainActivity</string>
 
+    <string name="download_title">断点下载</string>
 </resources>

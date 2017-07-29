@@ -7,16 +7,6 @@ import android.os.Looper;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -24,13 +14,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.internal.platform.Platform;
+import yaohf.com.api.OkHttpUtils;
 import yaohf.com.tool.ImageUtils;
 import yaohf.com.tool.L;
 
@@ -40,17 +40,22 @@ import yaohf.com.tool.L;
 
 public class OkHttpClientManager {
 
-    private static OkHttpClientManager instance;
+    private volatile static OkHttpClientManager instance;
     private OkHttpClient mHttpClient;
     private Handler mHanlder;
     private Gson mGson;
 
-    private OkHttpClientManager() {
-        mHttpClient = new OkHttpClient();
-        mHttpClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
+    private Platform mPlatform;
+
+    private  OkHttpClientManager() {
+        if(mHttpClient == null) {
+            mHttpClient = OkHttpUtils.getOkHttpClient();
+        }
         mHanlder = new Handler(Looper.getMainLooper());
         mGson = new Gson();
+        mPlatform = Platform.get();
     }
+
 
     public static OkHttpClientManager getInstance()
     {
@@ -266,14 +271,12 @@ public class OkHttpClientManager {
         call.enqueue(new Callback()
         {
             @Override
-            public void onFailure(final Request request, final IOException e)
-            {
-                sendFailedStringCallback(request, e, callback);
+            public void onFailure(Call call, IOException e) {
+                sendFailedStringCallback(call.request(), e, callback);
             }
 
             @Override
-            public void onResponse(Response response)
-            {
+            public void onResponse(Call call, Response response) throws IOException {
                 InputStream is = null;
                 byte[] buf = new byte[2048];
                 int len = 0;
@@ -301,15 +304,16 @@ public class OkHttpClientManager {
                         if (is != null) is.close();
                     } catch (IOException e)
                     {
+                        e.printStackTrace();
                     }
                     try
                     {
                         if (fos != null) fos.close();
                     } catch (IOException e)
                     {
+                        e.printStackTrace();
                     }
                 }
-
             }
         });
     }
@@ -330,14 +334,12 @@ public class OkHttpClientManager {
         call.enqueue(new Callback()
         {
             @Override
-            public void onFailure(Request request, IOException e)
-            {
+            public void onFailure(Call call, IOException e) {
                 setErrorResId(view, errorResId);
             }
 
             @Override
-            public void onResponse(Response response)
-            {
+            public void onResponse(Call call, Response response) throws IOException {
                 InputStream is = null;
                 try
                 {
@@ -382,8 +384,6 @@ public class OkHttpClientManager {
                 }
             }
         });
-
-
     }
 
     private void setErrorResId(final ImageView view, final int errorResId)
@@ -411,11 +411,11 @@ public class OkHttpClientManager {
     private Request buildMultipartFormRequest(String url, File[] files,String [] filekeys,Param [] params)
     {
         params = validateParam(params);
-        MultipartBuilder builder = new MultipartBuilder()
-                .type(MultipartBuilder.FORM);
+        MultipartBody.Builder builder = new MultipartBody.Builder("AaB03x")
+                .setType(MultipartBody.FORM);
         for(Param p : params)
         {
-            builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + p.key + "\""),RequestBody.create(null,p.value));
+            builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + p.key + "\""), RequestBody.create(null,p.value));
         }
         if(files !=null)
         {
@@ -464,12 +464,11 @@ public class OkHttpClientManager {
     {
         mHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
-                sendFailedStringCallback(request,e,callback);
+            public void onFailure(Call call, IOException e) {
+                sendFailedStringCallback(call.request(),e,callback);
             }
-
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 final String str = response.body().string();
                 L.v("response >>" + str);
                 if(callback.mType == String.class)
@@ -522,7 +521,7 @@ public class OkHttpClientManager {
         {
             params = new Param[0];
         }
-        FormEncodingBuilder builder = new FormEncodingBuilder();
+        FormBody.Builder builder = new FormBody.Builder();
         for (Param param : params)
         {
             builder.add(param.key, param.value);

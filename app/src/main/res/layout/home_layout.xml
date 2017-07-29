@@ -40,4 +40,12 @@
         android:text="single_instance"
         android:layout_below="@+id/single_task"
         android:layout_centerHorizontal="true" />
+    <Button
+        android:id="@+id/btn_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="主页"
+        android:layout_below="@+id/single_instance"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

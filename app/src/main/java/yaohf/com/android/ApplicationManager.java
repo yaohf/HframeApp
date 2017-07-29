@@ -5,8 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.projection.MediaProjectionManager;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.squareup.leakcanary.LeakCanary;
+
 import net.sqlcipher.database.SQLiteDatabase;
 
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
+import okhttp3.OkHttpClient;
+import yaohf.com.api.OkHttpUtils;
+import yaohf.com.api.https.HttpsUtils;
 import yaohf.com.api.net.VolleyManager;
 import yaohf.com.core.AppAction;
 import yaohf.com.core.AppActionImpl;
@@ -74,8 +88,11 @@ public class ApplicationManager extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+
+
         VolleyManager.getInstance(this);
         appAction = new AppActionImpl(this);
+
         SQLiteDatabase.loadLibs(this);
         //注册捕获crash error
         Cockroach.install(new Cockroach.ExceptionHandler() {
@@ -84,7 +101,43 @@ public class ApplicationManager extends Application {
                 throwable.printStackTrace();
             }
         });
+        initOkHttp();
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
     }
+    private void initOkHttp()
+    {
+        ClearableCookieJar cookieJar1 = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
+
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
+
+//        CookieJarImpl cookieJar1 = new CookieJarImpl(new MemoryCookieStore());
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                .cookieJar(cookieJar1)
+                .hostnameVerifier(new HostnameVerifier()
+                {
+                    @Override
+                    public boolean verify(String hostname, SSLSession session)
+                    {
+                        return true;
+                    }
+                })
+                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
+                .build();
+
+
+        OkHttpUtils.initClient(okHttpClient);
+
+    }
+
 
     public AppAction getAppAction() {
         return appAction;

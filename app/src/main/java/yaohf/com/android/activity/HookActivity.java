@@ -33,7 +33,7 @@ public class HookActivity extends BaseActivity {
     }
 
     public void onClick(View v) {
-        Map map = new HashMap();
+        HashMap<String,String> map = new HashMap<String,String>();
         switch (v.getId()) {
             case R.id.btn_hook1:
                 map.put("java", "web");

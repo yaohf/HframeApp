@@ -1,10 +1,10 @@
 package yaohf.com.api.manager;
 
-import com.squareup.okhttp.Request;
 
 import java.io.IOException;
 import java.util.Map;
 
+import okhttp3.Request;
 import yaohf.com.api.HttpUtils;
 import yaohf.com.api.IRequestCallback;
 import yaohf.com.api.IRequestManager;

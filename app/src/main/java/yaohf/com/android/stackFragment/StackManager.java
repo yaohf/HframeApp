@@ -13,6 +13,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import yaohf.com.android.R;
+import yaohf.com.android.activity.BaseActivity;
+import yaohf.com.android.stackFragment.test.Fragment1;
+import yaohf.com.tool.L;
 
 /**
  * Fragment task stack manager
@@ -78,15 +81,17 @@ public class StackManager implements CloseFragment {
             FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
             if (nextIn != 0 && nextOut != 0 && quitIn != 0 && quitOut != 0) {
                 transaction
-                        .setCustomAnimations(nextIn, nextOut)
-                        .add(R.id.framLayoutId, to, to.getClass().getName())
-                        .setCustomAnimations(nextIn, nextOut)
-                        .hide(from)
+                        .setCustomAnimations(R.anim.next_in, R.anim.next_out, R.anim.quit_in, R.anim.quit_out)
+//                        .setCustomAnimations(nextIn, nextOut)
+                        .replace(R.id.framLayoutId, to, to.getClass().getName())
+//                        .setCustomAnimations(nextIn, nextOut)
+                        .addToBackStack(null)
                         .commit();
             } else {
                 transaction
-                        .add(R.id.framLayoutId, to, to.getClass().getName())
-                        .hide(from)
+                        .setCustomAnimations(R.anim.next_in, R.anim.next_out, R.anim.quit_in, R.anim.quit_out)
+                        .replace(R.id.framLayoutId, to, to.getClass().getName())
+                        .addToBackStack(null)
                         .commit();
             }
 
@@ -229,62 +234,67 @@ public class StackManager implements CloseFragment {
     }
 
 
+
     /**
      * Close all fragment
      */
     public void closeAllFragment() {
+//        for (int i = 0; i < backStackCount; i++) {
+//            int backStackId = context.getSupportFragmentManager().getBackStackEntryAt(i).getId();
+//            L.v("backStackId" + backStackId);
+//            context.getSupportFragmentManager().popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        }
+        context.getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         int backStackCount = context.getSupportFragmentManager().getBackStackEntryCount();
-        for (int i = 0; i < backStackCount; i++) {
-            int backStackId = context.getSupportFragmentManager().getBackStackEntryAt(i).getId();
-            context.getSupportFragmentManager().popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
+        L.v("backStackCount" + backStackCount);
     }
 
     public void onBackPressed() {
-        Fragment[] last = stack.getLast();
-        final Fragment from = last[0];
-        Fragment to = last[1];
+//        Fragment[] last = stack.getLast();
+//        final Fragment from = last[0];
+//        Fragment to = last[1];
+        context.getSupportFragmentManager().popBackStack();
+//        if (from != null) {
+//            if (to != null) {
+//                FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.quit_in, R.anim.quit_out,R.anim.next_in, R.anim.next_out);
+//                transaction.replace(R.id.framLayoutId,to).commit();
+//            }
+//            View fromVie = from.getView();
+//            if (fromVie != null && next_out != null) {
+//                fromVie.startAnimation(next_out);
+//                next_out.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//                        stack.onBackPressed();
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
 
-        if (from != null) {
-            if (to != null) {
-                FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
-                transaction.show(to).commit();
-            }
-            View fromVie = from.getView();
-            if (fromVie != null && next_out != null) {
-                fromVie.startAnimation(next_out);
-                next_out.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        stack.onBackPressed();
-                        closeFragment(from);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-            } else {
-                stack.onBackPressed();
-                closeFragment(from);
-            }
-        }
-        if (to != null) {
-            View toView = to.getView();
-            if (toView != null && next_in != null) {
-                toView.startAnimation(next_in);
-            }
-        } else {
-            closeAllFragment();
-            context.finish();
-        }
+//            } else {
+//                stack.onBackPressed();
+//                closeFragment(from);
+//            }
+//        }
+//        if (to != null) {
+//            View toView = to.getView();
+//            if (toView != null && next_in != null) {
+//                toView.startAnimation(next_in);
+//            }
+//        } else {
+////            closeAllFragment();
+////            context.finish();
+//        }
     }
 
     public static boolean isFirstClose = true;
@@ -323,15 +333,15 @@ public class StackManager implements CloseFragment {
 
     }
 
-    @Override
-    public void show(RootFragment fragment) {
-        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
-        transaction.show(fragment).commit();
-        View view = fragment.getView();
-        if (view != null && next_in != null) {
-            view.startAnimation(next_in);
-        }
-    }
+//    @Override
+//    public void show(RootFragment fragment) {
+//        FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+//        transaction.show(fragment).commit();
+//        View view = fragment.getView();
+//        if (view != null && next_in != null) {
+//            view.startAnimation(next_in);
+//        }
+//    }
 
     @IntDef({STANDARD, SINGLE_TOP, SINGLE_TASK,SINGLE_INSTANCE,KEEP_CURRENT})
     public @interface StackMode {

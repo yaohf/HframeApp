@@ -82,7 +82,7 @@ public class FragmentStack {
                 lastList.add(fragment);
             } else {
                 if (listener != null) {
-                    listener.show(lastList.get(tempIndex));
+//                    listener.show(lastList.get(tempIndex));
                     StackManager.isFirstClose = true;
                     for (int i = lastList.size() - 1; i > tempIndex; i--) {
                         listener.close(lastList.get(i));

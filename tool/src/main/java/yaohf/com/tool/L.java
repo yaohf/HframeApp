@@ -1,5 +1,6 @@
 package yaohf.com.tool;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 public class L {
@@ -49,7 +50,25 @@ public class L {
 			Log.e(TAG, method + ">>" + msg);
 		}
 	}
-		
+
+	public static void e(String log) {
+		if (DEBUG) {
+				Log.e(TAG, log);
+		}
+	}
+
+
+
+	public static void e(String log, Exception e) {
+		if (DEBUG) {
+			if (!TextUtils.isEmpty(log))
+				Log.e(TAG, log);
+			e.printStackTrace();
+		}
+	}
+
+
+
 	private static String getContent(){
 		StackTraceElement[] stes = Thread.currentThread().getStackTrace();
 		if(stes == null){

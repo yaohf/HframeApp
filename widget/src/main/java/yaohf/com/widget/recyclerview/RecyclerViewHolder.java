@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -73,6 +74,11 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public EditText getEditText(int viewId) {
         return (EditText) getView(viewId);
+    }
+
+    public ProgressBar getProgressBar(int viewId)
+    {
+        return (ProgressBar) getView(viewId);
     }
 
     public RecyclerViewHolder setText(int viewId, String value) {

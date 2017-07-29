@@ -1,17 +1,18 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
+//            shrinkResources true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -23,4 +24,5 @@ dependencies {
     compile project(':model')
     compile project(':api')
     compile project(':tool')
+    //RxJava和RxAndroid 用来做线程切换的
 }

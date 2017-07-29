@@ -1,8 +1,8 @@
 package yaohf.com.tool.permission;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.pm.PackageManager;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import java.lang.annotation.Annotation;
